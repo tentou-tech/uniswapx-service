@@ -1,4 +1,4 @@
-import { CosignedV2DutchOrder as SDKV2DutchOrder, OrderType } from '@uniswap/uniswapx-sdk'
+import { CosignedV2DutchOrder as SDKV2DutchOrder, OrderType } from '@tentou-tech/uniswapx-sdk'
 import { ORDER_STATUS, UniswapXOrderEntity } from '../entities'
 import { GetDutchV2OrderResponse } from '../handlers/get-orders/schema/GetDutchV2OrderResponse'
 import { Order } from './Order'

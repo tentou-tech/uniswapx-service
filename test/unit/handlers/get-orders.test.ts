@@ -1,5 +1,5 @@
 import { Logger } from '@aws-lambda-powertools/logger'
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { mock } from 'jest-mock-extended'
 import { ORDER_STATUS, SORT_FIELDS } from '../../../lib/entities'
 import { GetOrdersHandler } from '../../../lib/handlers/get-orders/handler'

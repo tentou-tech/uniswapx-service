@@ -1,4 +1,4 @@
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { ORDER_STATUS, SettledAmount } from './Order'
 
 export type RelayOrderEntity = {

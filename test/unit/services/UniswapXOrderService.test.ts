@@ -1,6 +1,6 @@
 import { Logger } from '@aws-lambda-powertools/logger'
 import { KmsSigner } from '@uniswap/signer'
-import { OrderType, OrderValidation, OrderValidator } from '@uniswap/uniswapx-sdk'
+import { OrderType, OrderValidation, OrderValidator } from '@tentou-tech/uniswapx-sdk'
 import { mock } from 'jest-mock-extended'
 import { ORDER_STATUS, UniswapXOrderEntity } from '../../../lib/entities'
 import { OnChainValidatorMap } from '../../../lib/handlers/OnChainValidatorMap'

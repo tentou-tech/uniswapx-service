@@ -1,7 +1,7 @@
 import {
   OrderValidator as OnChainOrderValidator,
   RelayOrderValidator as OnChainRelayOrderValidator,
-} from '@uniswap/uniswapx-sdk'
+} from '@tentou-tech/uniswapx-sdk'
 import { DynamoDB } from 'aws-sdk'
 import { ethers } from 'ethers'
 import { CONFIG } from '../../Config'

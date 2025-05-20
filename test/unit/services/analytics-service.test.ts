@@ -1,4 +1,4 @@
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { ORDER_STATUS, UniswapXOrderEntity } from '../../../lib/entities'
 import { AnalyticsService } from '../../../lib/services/analytics-service'
 import { Logger } from '@aws-lambda-powertools/logger'

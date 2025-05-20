@@ -1,4 +1,4 @@
-import { CosignedPriorityOrder, CosignedV2DutchOrder, CosignedV3DutchOrder, DutchOrder, UniswapXOrder, OrderType } from '@uniswap/uniswapx-sdk'
+import { CosignedPriorityOrder, CosignedV2DutchOrder, CosignedV3DutchOrder, DutchOrder, UniswapXOrder, OrderType } from '@tentou-tech/uniswapx-sdk'
 import { ChainId } from '../util/chain'
 import { UniswapXOrderEntity } from '../entities'
 

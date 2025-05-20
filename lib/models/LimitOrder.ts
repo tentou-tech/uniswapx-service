@@ -1,4 +1,4 @@
-import { DutchOrder as SDKDutchOrder, OrderType } from '@uniswap/uniswapx-sdk'
+import { DutchOrder as SDKDutchOrder, OrderType } from '@tentou-tech/uniswapx-sdk'
 import { ORDER_STATUS, UniswapXOrderEntity } from '../entities'
 import { Order } from './Order'
 

@@ -109,3 +109,12 @@ dist
 # AWS CDK
 cdk.out
 
+# ide
+.idea/
+
+# vscode
+.vscode/
+
+# cursor
+. cursor/
+

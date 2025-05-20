@@ -1,4 +1,4 @@
-import { OrderType, RelayOrder as SDKRelayOrder } from '@uniswap/uniswapx-sdk'
+import { OrderType, RelayOrder as SDKRelayOrder } from '@tentou-tech/uniswapx-sdk'
 import { ORDER_STATUS, RelayOrderEntity } from '../entities'
 import { GetRelayOrderResponse } from '../handlers/get-orders/schema/GetRelayOrderResponse'
 import { Order } from './Order'

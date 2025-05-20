@@ -3880,6 +3880,32 @@
   resolved "https://registry.npmjs.org/@swc/types/-/types-0.1.5.tgz"
   integrity sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==
 
+"@tentou-tech/uniswap-sdk-core@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@tentou-tech/uniswap-sdk-core/-/uniswap-sdk-core-0.0.17.tgz#e3b8cfd23dd4fce5e9ea0cfc87ede02f4fb6b875"
+  integrity sha512-GuZOI/PMJpXp19J9hemUXoO3gx91WVYbFPHNOWSO+eyku3IE6axVusJ8QsC3Isr19aQQL5oSD0Rgji7pro6Zrg==
+  dependencies:
+    "@ethersproject/address" "^5.0.2"
+    "@ethersproject/bytes" "^5.7.0"
+    "@ethersproject/keccak256" "5.7.0"
+    "@ethersproject/strings" "5.7.0"
+    big.js "^5.2.2"
+    decimal.js-light "^2.5.0"
+    jsbi "^3.1.4"
+    tiny-invariant "^1.1.0"
+    toformat "^2.0.0"
+
+"@tentou-tech/uniswapx-sdk@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@tentou-tech/uniswapx-sdk/-/uniswapx-sdk-0.0.1.tgz#d77fee6e87949959913867a42abfb4d18ddda106"
+  integrity sha512-d2UKLdlHOO6udHeEkaHOvXfhPTFNQPpF6YlFHl6PjvEcJSfc1IZ3RiAp1dljAys76JDlKh/7A4nsh3pXIBWD5w==
+  dependencies:
+    "@ethersproject/bytes" "^5.7.0"
+    "@ethersproject/providers" "^5.7.0"
+    "@tentou-tech/uniswap-sdk-core" "^0.0.17"
+    "@uniswap/permit2-sdk" "^1.2.1"
+    ethers "^5.7.0"
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
   resolved "https://registry.npmjs.org/@tsconfig/node10/-/node10-1.0.9.tgz"
@@ -4371,17 +4397,6 @@
     "@uniswap/v3-periphery" "^1.4.4"
     dotenv "^14.2.0"
     hardhat-watcher "^2.1.1"
-
-"@uniswap/uniswapx-sdk@^3.0.0-beta.3":
-  version "3.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@uniswap/uniswapx-sdk/-/uniswapx-sdk-3.0.0-beta.3.tgz#eb827666bfc9b704eb75dcb3e3c0460d2ef44fc5"
-  integrity sha512-5j54ZRfDMBQnpG4m95hm8/TswfVh5/Ca9jjIhjLyZkFAquhh+y71IBa5nb2HoIgBSiOcMK3bncSwhziXxtkzNQ==
-  dependencies:
-    "@ethersproject/bytes" "^5.7.0"
-    "@ethersproject/providers" "^5.7.0"
-    "@uniswap/permit2-sdk" "^1.2.1"
-    "@uniswap/sdk-core" "^7.5.0"
-    ethers "^5.7.0"
 
 "@uniswap/universal-router-sdk@^4.18.1":
   version "4.18.1"

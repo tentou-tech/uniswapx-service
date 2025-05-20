@@ -1,4 +1,4 @@
-import { OrderType, RelayOrderValidator as OnChainRelayOrderValidator } from '@uniswap/uniswapx-sdk'
+import { OrderType, RelayOrderValidator as OnChainRelayOrderValidator } from '@tentou-tech/uniswapx-sdk'
 import { DynamoDB } from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { ethers } from 'ethers'

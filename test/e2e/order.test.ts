@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-disabled-tests */
-import { DutchOrder, DutchOrderBuilder, REACTOR_ADDRESS_MAPPING, SignedUniswapXOrder, UnsignedV2DutchOrder, V2DutchOrderBuilder } from '@uniswap/uniswapx-sdk'
+import { DutchOrder, DutchOrderBuilder, REACTOR_ADDRESS_MAPPING, SignedUniswapXOrder, UnsignedV2DutchOrder, V2DutchOrderBuilder } from '@tentou-tech/uniswapx-sdk'
 import axios from 'axios'
 import dotenv from 'dotenv'
 import { BigNumber, Contract, ethers, Wallet } from 'ethers'
@@ -12,7 +12,7 @@ import { GetOrdersResponse } from '../../lib/handlers/get-orders/schema/GetOrder
 import { ChainId } from '../../lib/util/chain'
 import * as ERC20_ABI from './abis/erc20.json'
 import { stringValue } from 'aws-sdk/clients/iot'
-import { ExclusiveDutchOrderReactor__factory } from '@uniswap/uniswapx-sdk/dist/cjs/src/contracts/factories'
+import { ExclusiveDutchOrderReactor__factory } from '@tentou-tech/uniswapx-sdk/dist/cjs/src/contracts/factories'
 import { RPC_HEADERS } from '../../lib/util/constants'
 const { abi } = ERC20_ABI
 

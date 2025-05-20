@@ -1,5 +1,5 @@
 import { MetricUnits } from '@aws-lambda-powertools/metrics'
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import Joi from 'joi'
 import { CheckOrderStatusHandlerMetricNames, powertoolsMetric } from '../../Metrics'
 import { RelayOrderService } from '../../services/RelayOrderService'

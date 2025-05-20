@@ -1,4 +1,4 @@
-import { OrderType, OrderValidator, UniswapXEventWatcher } from '@uniswap/uniswapx-sdk'
+import { OrderType, OrderValidator, UniswapXEventWatcher } from '@tentou-tech/uniswapx-sdk'
 import { MetricsLogger } from 'aws-embedded-metrics'
 import { DynamoDB } from 'aws-sdk'
 import { default as bunyan, default as Logger } from 'bunyan'

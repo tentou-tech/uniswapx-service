@@ -10,7 +10,7 @@ import {
   UniswapXOrderParser,
   CosignedV3DutchOrder,
   CosignedV3DutchOrder as SDKV3DutchOrder,
-} from '@uniswap/uniswapx-sdk'
+} from '@tentou-tech/uniswapx-sdk'
 import { UnexpectedOrderTypeError } from '../../errors/UnexpectedOrderTypeError'
 import { DutchV1Order } from '../../models/DutchV1Order'
 import { DutchV2Order } from '../../models/DutchV2Order'
