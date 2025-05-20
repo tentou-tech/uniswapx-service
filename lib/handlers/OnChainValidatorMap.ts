@@ -1,4 +1,4 @@
-import { OrderValidator, RelayOrderValidator } from '@uniswap/uniswapx-sdk'
+import { OrderValidator, RelayOrderValidator } from '@tentou-tech/uniswapx-sdk'
 import { ChainId } from '../util/chain'
 
 export class OnChainValidatorMap<T extends OrderValidator | RelayOrderValidator> {

@@ -3,7 +3,7 @@ import { UnimindStatistics } from "../crons/unimind-algorithm";
 import { UnimindParameters } from "../repositories/unimind-parameters-repository";
 import { IUnimindAlgorithm } from "../util/unimind";
 import { QuoteMetadata } from '../repositories/quote-metadata-repository';
-import { BPS } from '@uniswap/uniswapx-sdk';
+import { BPS } from '@tentou-tech/uniswapx-sdk';
 
 export type PriceImpactIntrinsicParameters = {
     lambda1: number;

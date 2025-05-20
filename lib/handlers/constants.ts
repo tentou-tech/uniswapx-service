@@ -23,6 +23,8 @@ export const PRIORITY_ORDER_TARGET_BLOCK_BUFFER: Record<ChainId, number> = {
   [ChainId.POLYGON]: 3,
   [ChainId.SEPOLIA]: 3,
   [ChainId.GÖRLI]: 3,
+  [ChainId.STORY_AENEID]: 3,
+  [ChainId.STORY]: 3,
 }
 
 export const DUTCHV2_ORDER_LATENCY_THRESHOLD_SEC = 20;

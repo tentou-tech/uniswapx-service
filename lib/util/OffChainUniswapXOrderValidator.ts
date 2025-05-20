@@ -11,7 +11,7 @@ import {
   PriorityOutput,
   REACTOR_ADDRESS_MAPPING,
   V3DutchOutput,
-} from '@uniswap/uniswapx-sdk'
+} from '@tentou-tech/uniswapx-sdk'
 import { BigNumber } from 'ethers'
 import Joi from 'joi'
 import { ONE_DAY_IN_SECONDS } from './constants'

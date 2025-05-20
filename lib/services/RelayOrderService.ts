@@ -6,7 +6,7 @@ import {
   RelayEventWatcher,
   RelayOrder as SDKRelayOrder,
   RelayOrderValidator as OnChainRelayOrderValidator,
-} from '@uniswap/uniswapx-sdk'
+} from '@tentou-tech/uniswapx-sdk'
 import { ethers } from 'ethers'
 import { ORDER_STATUS, RelayOrderEntity } from '../entities'
 import { InvalidTokenInAddress } from '../errors/InvalidTokenInAddress'

@@ -1,6 +1,6 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
 import { KmsSigner } from '@uniswap/signer'
-import { CosignedPriorityOrder as SDKPriorityOrder, OrderType } from '@uniswap/uniswapx-sdk'
+import { CosignedPriorityOrder as SDKPriorityOrder, OrderType } from '@tentou-tech/uniswapx-sdk'
 import { BigNumber } from 'ethers'
 import { ORDER_STATUS, PriorityOrderEntity, UniswapXOrderEntity } from '../entities'
 import { PRIORITY_ORDER_TARGET_BLOCK_BUFFER } from '../handlers/constants'

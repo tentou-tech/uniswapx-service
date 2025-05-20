@@ -4,7 +4,7 @@ import { updateParameters } from '../../../lib/crons/unimind-algorithm'
 import { DynamoUnimindParametersRepository } from '../../../lib/repositories/unimind-parameters-repository'
 import { DutchOrdersRepository } from '../../../lib/repositories/dutch-orders-repository'
 import { DutchV3OrderEntity, ORDER_STATUS } from '../../../lib/entities'
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { DEFAULT_UNIMIND_PARAMETERS, UNIMIND_ALGORITHM_VERSION, UNIMIND_DEV_SWAPPER_ADDRESS, UNIMIND_UPDATE_THRESHOLD } from '../../../lib/util/constants'
 
 const dynamoConfig = {

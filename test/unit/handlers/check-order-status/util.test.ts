@@ -1,5 +1,5 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { mock } from 'jest-mock-extended'
 import { getWatcher } from '../../../../lib/handlers/check-order-status/util'
 

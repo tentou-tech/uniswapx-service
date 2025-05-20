@@ -1,7 +1,7 @@
 import { GetOrdersHandler } from './handler'
 import { GetOrdersInjector } from './injector'
 
-import { OrderValidator, RelayOrderValidator } from '@uniswap/uniswapx-sdk'
+import { OrderValidator, RelayOrderValidator } from '@tentou-tech/uniswapx-sdk'
 import { DynamoDB } from 'aws-sdk'
 import { DutchOrdersRepository } from '../../repositories/dutch-orders-repository'
 import { RelayOrderRepository } from '../../repositories/RelayOrderRepository'

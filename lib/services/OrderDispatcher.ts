@@ -1,5 +1,5 @@
 import { Logger } from '@aws-lambda-powertools/logger'
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { UniswapXOrderEntity } from '../entities'
 import { NoHandlerConfiguredError } from '../errors/NoHandlerConfiguredError'
 import { GetOrdersQueryParams } from '../handlers/get-orders/schema'

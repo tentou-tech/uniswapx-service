@@ -6,7 +6,7 @@ import {
   OrderValidator,
   RelayEventWatcher,
   RelayOrderValidator,
-} from '@uniswap/uniswapx-sdk'
+} from '@tentou-tech/uniswapx-sdk'
 import { mockClient } from 'aws-sdk-client-mock'
 import { BigNumber } from 'ethers'
 import { mock } from 'jest-mock-extended'

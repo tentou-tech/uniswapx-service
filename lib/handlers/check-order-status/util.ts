@@ -9,7 +9,7 @@ import {
   REACTOR_ADDRESS_MAPPING,
   RelayOrder,
   UniswapXEventWatcher,
-} from '@uniswap/uniswapx-sdk'
+} from '@tentou-tech/uniswapx-sdk'
 
 import { BigNumber, ethers } from 'ethers'
 import { ORDER_STATUS, SettledAmount } from '../../entities'

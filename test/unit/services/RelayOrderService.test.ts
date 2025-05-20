@@ -1,6 +1,6 @@
 import { Logger } from '@aws-lambda-powertools/logger'
 import { AddressZero } from '@ethersproject/constants'
-import { OrderValidation, RelayEventWatcher, RelayOrderValidator } from '@uniswap/uniswapx-sdk'
+import { OrderValidation, RelayEventWatcher, RelayOrderValidator } from '@tentou-tech/uniswapx-sdk'
 import { BigNumber, ethers } from 'ethers'
 import { mock } from 'jest-mock-extended'
 import { ORDER_STATUS, RelayOrderEntity } from '../../../lib/entities'

@@ -8,7 +8,7 @@ import { DEFAULT_UNIMIND_PARAMETERS, UNIMIND_ALGORITHM_VERSION, UNIMIND_UPDATE_T
 import { UNIMIND_ALGORITHM_CRON_INTERVAL } from '../../bin/constants'
 import { DutchOrdersRepository } from '../repositories/dutch-orders-repository'
 import { DutchV3OrderEntity, ORDER_STATUS, SORT_FIELDS, UniswapXOrderEntity } from '../entities'
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import { QueryResult } from '../repositories/base'
 import { ChainId } from '@uniswap/sdk-core'
 import { unimindAddressFilter } from '../util/unimind'

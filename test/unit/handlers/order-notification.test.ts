@@ -2,7 +2,7 @@ import axios from 'axios'
 import { OrderNotificationHandler } from '../../../lib/handlers/order-notification/handler'
 
 jest.mock('axios')
-jest.mock('@uniswap/uniswapx-sdk')
+jest.mock('@tentou-tech/uniswapx-sdk')
 
 describe('Testing new order Notification handler.', () => {
   // Creating mocks for all the handler dependencies.

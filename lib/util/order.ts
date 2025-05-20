@@ -1,4 +1,4 @@
-import { DutchOrder, OrderType, UniswapXOrderParser } from '@uniswap/uniswapx-sdk'
+import { DutchOrder, OrderType, UniswapXOrderParser } from '@tentou-tech/uniswapx-sdk'
 import { DynamoDBRecord } from 'aws-lambda'
 import { ORDER_STATUS, UniswapXOrderEntity } from '../entities'
 

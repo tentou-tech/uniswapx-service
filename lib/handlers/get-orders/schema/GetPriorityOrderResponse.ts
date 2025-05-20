@@ -1,4 +1,4 @@
-import { OrderType } from '@uniswap/uniswapx-sdk'
+import { OrderType } from '@tentou-tech/uniswapx-sdk'
 import Joi from 'joi'
 import FieldValidator from '../../../util/field-validator'
 import { GetDutchV2OrderResponse } from './GetDutchV2OrderResponse'

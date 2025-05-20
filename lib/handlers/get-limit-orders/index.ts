@@ -1,4 +1,4 @@
-import { OrderValidator, RelayOrderValidator } from '@uniswap/uniswapx-sdk'
+import { OrderValidator, RelayOrderValidator } from '@tentou-tech/uniswapx-sdk'
 import { DynamoDB } from 'aws-sdk'
 import { RelayOrderRepository } from '../../repositories/RelayOrderRepository'
 import { AnalyticsService } from '../../services/analytics-service'
