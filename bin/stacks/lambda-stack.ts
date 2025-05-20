@@ -385,7 +385,8 @@ export class LambdaStack extends cdk.NestedStack {
     this.orderNotificationLambdaAlias = new aws_lambda.Alias(this, `OrderNotificationAlias`, {
       aliasName: 'live',
       version: this.orderNotificationLambda.currentVersion,
-      provisionedConcurrentExecutions: orderNotificationProvisionedConcurrency,
+      // provisionedConcurrentExecutions: orderNotificationProvisionedConcurrency,
+      provisionedConcurrentExecutions: enableProvisionedConcurrency ? orderNotificationProvisionedConcurrency : undefined,
     })
 
     this.getUnimindLambdaAlias = new aws_lambda.Alias(this, `GetUnimindLiveAlias`, {
