@@ -1,0 +1,35 @@
+name: AWS Service CI/CD
+
+on:
+  push:
+    branches: [ dev, staging ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+      - name: Install dependencies and CDK
+        run: |
+          mv .env.${GITHUB_REF_NAME} .env
+          cat .env
+          npm install -g aws-cdk yarn
+      - name: Build
+        run: yarn && yarn build
+      - name: Uppercase branch name
+        run: |
+          branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          echo "BRANCH_NAME=${branch_name^^}" >>${GITHUB_ENV}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets[format('AWS_{0}_ACCESS_KEY', env.BRANCH_NAME)] }}
+          aws-secret-access-key: ${{ secrets[format('AWS_{0}_SECRET_KEY', env.BRANCH_NAME)] }}
+          aws-region: ${{ secrets[format('AWS_{0}_REGION', env.BRANCH_NAME)] }}
+      - name: Run CDK deploy
+        run: |
+          cdk deploy GoudaServiceStack --require-approval=never  > /dev/null || (echo "CDK deploy failed" && exit 1)
