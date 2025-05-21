@@ -3892,10 +3892,10 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@tentou-tech/uniswapx-sdk@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@tentou-tech/uniswapx-sdk/-/uniswapx-sdk-0.0.1.tgz#d77fee6e87949959913867a42abfb4d18ddda106"
-  integrity sha512-d2UKLdlHOO6udHeEkaHOvXfhPTFNQPpF6YlFHl6PjvEcJSfc1IZ3RiAp1dljAys76JDlKh/7A4nsh3pXIBWD5w==
+"@tentou-tech/uniswapx-sdk@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@tentou-tech/uniswapx-sdk/-/uniswapx-sdk-0.0.2.tgz#4d137aed35d933fe985bec2e07114bc6b408e62f"
+  integrity sha512-UKE4j12olD+IG91mErAnjduB/gKXtxWKVQKeFXlmuirZkys5E77HZlbWQNBEUSZZVXImSxer5/Ck09prlJIZKw==
   dependencies:
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/providers" "^5.7.0"
