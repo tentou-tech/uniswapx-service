@@ -207,6 +207,8 @@ export class GetOrdersHandler extends APIGLambdaHandler<
   }
 
   private async getTokenMetadata(tokenAddresses: string[]) {
+    const result = dotenv.config()
+    log.info({ result }, 'Load env')
     if (process.env['MIMBOKU_V3_GRAPHQL_URL'] === undefined) {
       throw new Error(`Environmental variable MIMBOKU_V3_GRAPHQL_URL isn't defined!`)
     }
