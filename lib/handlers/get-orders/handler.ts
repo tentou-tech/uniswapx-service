@@ -1,6 +1,8 @@
-import Joi from 'joi'
 import { Unit } from 'aws-embedded-metrics'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda'
+import dotenv from 'dotenv'
+import Joi from 'joi'
+import fetch from 'node-fetch'
 import { UniswapXOrderEntity } from '../../entities'
 import { OrderDispatcher } from '../../services/OrderDispatcher'
 import { log } from '../../util/log'
@@ -15,12 +17,13 @@ import {
 } from '../base/index'
 import { ContainerInjected, RequestInjected } from './injector'
 import { GetDutchV2OrderResponse } from './schema/GetDutchV2OrderResponse'
+import { GetDutchV3OrderResponse } from './schema/GetDutchV3OrderResponse'
 import { GetOrdersResponse, GetOrdersResponseJoi } from './schema/GetOrdersResponse'
 import { GetPriorityOrderResponse } from './schema/GetPriorityOrderResponse'
 import { GetRelayOrderResponse, GetRelayOrdersResponseJoi } from './schema/GetRelayOrderResponse'
 import { GetOrdersQueryParams, GetOrdersQueryParamsJoi, RawGetOrdersQueryParams } from './schema/index'
-import { GetDutchV3OrderResponse } from './schema/GetDutchV3OrderResponse'
-import fetch from 'node-fetch'
+
+dotenv.config()
 
 export class GetOrdersHandler extends APIGLambdaHandler<
   ContainerInjected,
@@ -28,10 +31,14 @@ export class GetOrdersHandler extends APIGLambdaHandler<
   void,
   RawGetOrdersQueryParams,
   GetOrdersResponse<
-    UniswapXOrderEntity | GetDutchV2OrderResponse | GetDutchV3OrderResponse | GetRelayOrderResponse | GetPriorityOrderResponse | undefined
+    | UniswapXOrderEntity
+    | GetDutchV2OrderResponse
+    | GetDutchV3OrderResponse
+    | GetRelayOrderResponse
+    | GetPriorityOrderResponse
+    | undefined
   >
 > {
-
   constructor(
     handlerName: string,
     injectorPromise: Promise<ApiInjector<ContainerInjected, RequestInjected, void, RawGetOrdersQueryParams>>,
@@ -45,7 +52,12 @@ export class GetOrdersHandler extends APIGLambdaHandler<
   ): Promise<
     | Response<
         GetOrdersResponse<
-          UniswapXOrderEntity | GetDutchV2OrderResponse | GetDutchV3OrderResponse | GetRelayOrderResponse | GetPriorityOrderResponse | undefined
+          | UniswapXOrderEntity
+          | GetDutchV2OrderResponse
+          | GetDutchV3OrderResponse
+          | GetRelayOrderResponse
+          | GetPriorityOrderResponse
+          | undefined
         >
       >
     | ErrorResponse
@@ -66,10 +78,10 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           executeAddress,
         })
 
-        log.info({ getOrdersResult }, 'Get orders result before token metadata');
+        log.info({ getOrdersResult }, 'Get orders result before token metadata')
 
         // mapping the token symbol and decimals to the order
-        let tokenAddresses: string[] = [];
+        let tokenAddresses: string[] = []
         getOrdersResult.orders.map((order: any) => {
           if (order.input.token) {
             tokenAddresses.push(order.input.token)
@@ -81,39 +93,38 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           }
         })
 
-        log.info({ tokenAddresses }, 'Token addresses before deduplication');
+        log.info({ tokenAddresses }, 'Token addresses before deduplication')
 
         // remove duplicates from tokenAddresses
-        tokenAddresses = [...new Set(tokenAddresses)];
+        tokenAddresses = [...new Set(tokenAddresses)]
 
-        log.info({ tokenAddresses }, 'Token addresses after deduplication');
+        log.info({ tokenAddresses }, 'Token addresses after deduplication')
 
         // get the token metadata
-        const tokenMetadata = await this.getTokenMetadata(tokenAddresses);
+        const tokenMetadata = await this.getTokenMetadata(tokenAddresses)
 
-        log.info({ tokenMetadata }, 'Token metadata');
+        log.info({ tokenMetadata }, 'Token metadata')
 
         // add the token metadata to the order
         const orders = getOrdersResult.orders.map((order: any) => {
           if (order.input.token) {
-            order.input.symbol = tokenMetadata.get(order.input.token)?.symbol;
-            order.input.decimals = tokenMetadata.get(order.input.token)?.decimals;
+            order.input.symbol = tokenMetadata.get(order.input.token)?.symbol
+            order.input.decimals = tokenMetadata.get(order.input.token)?.decimals
           }
           if (order.outputs.length > 0) {
             order.outputs.forEach((output: any) => {
-              output.symbol = tokenMetadata.get(output.token)?.symbol;
-              output.decimals = tokenMetadata.get(output.token)?.decimals;
+              output.symbol = tokenMetadata.get(output.token)?.symbol
+              output.decimals = tokenMetadata.get(output.token)?.decimals
             })
           }
-          return order;
-        });
+          return order
+        })
 
-        log.info({ orders }, 'Orders with token metadata');
+        log.info({ orders }, 'Orders with token metadata')
 
-        getOrdersResult.orders = orders;
+        getOrdersResult.orders = orders
 
-        log.info({ getOrdersResult }, 'Get orders result');
-
+        log.info({ getOrdersResult }, 'Get orders result')
 
         return {
           statusCode: 200,
@@ -196,11 +207,11 @@ export class GetOrdersHandler extends APIGLambdaHandler<
   }
 
   private async getTokenMetadata(tokenAddresses: string[]) {
-    const URL_V3 = process.env.MIMBOKU_V3_GRAPHQL_URL!;
-    const URL_V2 = process.env.MIMBOKU_V2_GRAPHQL_URL!;
-    const mapTokenToMetadata = new Map<string, { symbol: string; decimals: number }>();
+    const URL_V3 = process.env.MIMBOKU_V3_GRAPHQL_URL!
+    const URL_V2 = process.env.MIMBOKU_V2_GRAPHQL_URL!
+    const mapTokenToMetadata = new Map<string, { symbol: string; decimals: number }>()
 
-    log.info({ URL_V3, URL_V2 }, 'URLs');
+    log.info({ URL_V3, URL_V2 }, 'URLs')
 
     const query = `
       query GetTokenMetadata($tokens: [String!]!) {
@@ -210,7 +221,7 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           decimals
         }
       }
-    `;
+    `
 
     try {
       // Fetch from V3 subgraph
@@ -220,22 +231,22 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query, variables: { tokens: tokenAddresses } }),
-      });
+      })
 
-      log.info({ v3Response }, 'V3 subgraph response');
+      log.info({ v3Response }, 'V3 subgraph response')
 
       if (!v3Response.ok) {
-        throw new Error(`V3 subgraph request failed: ${v3Response.statusText}`);
+        throw new Error(`V3 subgraph request failed: ${v3Response.statusText}`)
       }
 
-      const v3Data = await v3Response.json();
-      log.info({ v3Data }, 'V3 subgraph response');
+      const v3Data = await v3Response.json()
+      log.info({ v3Data }, 'V3 subgraph response')
       v3Data.data.tokens.forEach((token: { id: string; symbol: string; decimals: number }) => {
-        mapTokenToMetadata.set(token.id.toLowerCase(), { 
-          symbol: token.symbol, 
-          decimals: token.decimals 
-        });
-      });
+        mapTokenToMetadata.set(token.id.toLowerCase(), {
+          symbol: token.symbol,
+          decimals: token.decimals,
+        })
+      })
 
       // Fetch from V2 subgraph
       const v2Response = await fetch(URL_V2, {
@@ -244,31 +255,31 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query, variables: { tokens: tokenAddresses } }),
-      });
+      })
 
-      log.info({ v2Response }, 'V2 subgraph response');
+      log.info({ v2Response }, 'V2 subgraph response')
 
       if (!v2Response.ok) {
-        throw new Error(`V2 subgraph request failed: ${v2Response.statusText}`);
+        throw new Error(`V2 subgraph request failed: ${v2Response.statusText}`)
       }
 
-      const v2Data = await v2Response.json();
-      log.info({ v2Data }, 'V2 subgraph response');
+      const v2Data = await v2Response.json()
+      log.info({ v2Data }, 'V2 subgraph response')
 
       v2Data.data.tokens.forEach((token: { id: string; symbol: string; decimals: number }) => {
-        const tokenId = token.id.toLowerCase();
+        const tokenId = token.id.toLowerCase()
         if (!mapTokenToMetadata.has(tokenId)) {
-          mapTokenToMetadata.set(tokenId, { 
-            symbol: token.symbol, 
-            decimals: token.decimals 
-          });
+          mapTokenToMetadata.set(tokenId, {
+            symbol: token.symbol,
+            decimals: token.decimals,
+          })
         }
-      });
+      })
 
-      return mapTokenToMetadata;
+      return mapTokenToMetadata
     } catch (error) {
-      log.error({ error, tokenAddresses }, 'Failed to fetch token metadata from subgraphs');
-      throw error;
+      log.error({ error, tokenAddresses }, 'Failed to fetch token metadata from subgraphs')
+      throw error
     }
   }
 }
