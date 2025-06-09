@@ -66,6 +66,8 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           executeAddress,
         })
 
+        log.info({ getOrdersResult }, 'Get orders result before token metadata');
+
         // mapping the token symbol and decimals to the order
         let tokenAddresses: string[] = [];
         getOrdersResult.orders.map((order: any) => {
@@ -79,10 +81,12 @@ export class GetOrdersHandler extends APIGLambdaHandler<
           }
         })
 
+        log.info({ tokenAddresses }, 'Token addresses before deduplication');
+
         // remove duplicates from tokenAddresses
         tokenAddresses = [...new Set(tokenAddresses)];
 
-        log.info({ tokenAddresses }, 'Token addresses');
+        log.info({ tokenAddresses }, 'Token addresses after deduplication');
 
         // get the token metadata
         const tokenMetadata = await this.getTokenMetadata(tokenAddresses);
@@ -195,6 +199,8 @@ export class GetOrdersHandler extends APIGLambdaHandler<
     const URL_V3 = process.env.MIMBOKU_V3_GRAPHQL_URL!;
     const URL_V2 = process.env.MIMBOKU_V2_GRAPHQL_URL!;
     const mapTokenToMetadata = new Map<string, { symbol: string; decimals: number }>();
+
+    log.info({ URL_V3, URL_V2 }, 'URLs');
 
     const query = `
       query GetTokenMetadata($tokens: [String!]!) {
