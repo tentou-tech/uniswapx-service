@@ -14,6 +14,8 @@ export type OrderInput = {
   token: string
   startAmount?: string
   endAmount?: string
+  symbol?: string
+  decimals?: number
 }
 
 export type V3OrderInput = {
@@ -35,6 +37,8 @@ export type OrderOutput = {
   startAmount: string
   endAmount: string
   recipient: string
+  symbol?: string
+  decimals?: number
 }
 
 export type V3OrderOutput = {
