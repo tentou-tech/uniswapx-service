@@ -1,6 +1,5 @@
 import { Unit } from 'aws-embedded-metrics'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda'
-import dotenv from 'dotenv'
 import Joi from 'joi'
 import fetch from 'node-fetch'
 import { UniswapXOrderEntity } from '../../entities'
@@ -22,8 +21,6 @@ import { GetOrdersResponse, GetOrdersResponseJoi } from './schema/GetOrdersRespo
 import { GetPriorityOrderResponse } from './schema/GetPriorityOrderResponse'
 import { GetRelayOrderResponse, GetRelayOrdersResponseJoi } from './schema/GetRelayOrderResponse'
 import { GetOrdersQueryParams, GetOrdersQueryParamsJoi, RawGetOrdersQueryParams } from './schema/index'
-
-dotenv.config()
 
 export class GetOrdersHandler extends APIGLambdaHandler<
   ContainerInjected,
@@ -207,16 +204,13 @@ export class GetOrdersHandler extends APIGLambdaHandler<
   }
 
   private async getTokenMetadata(tokenAddresses: string[]) {
-    const result = dotenv.config()
-    log.info({ result }, 'Load env')
-    if (process.env['MIMBOKU_V3_GRAPHQL_URL'] === undefined) {
-      throw new Error(`Environmental variable MIMBOKU_V3_GRAPHQL_URL isn't defined!`)
-    }
-    if (process.env['MIMBOKU_V2_GRAPHQL_URL'] === undefined) {
-      throw new Error(`Environmental variable MIMBOKU_V2_GRAPHQL_URL isn't defined!`)
-    }
+    // Load variable from Lambda env
     const URL_V3 = process.env.MIMBOKU_V3_GRAPHQL_URL!
     const URL_V2 = process.env.MIMBOKU_V2_GRAPHQL_URL!
+    if (URL_V3 == '' || URL_V2 == '') {
+      throw new Error(`Missing required environment variables.`)
+    }
+
     const mapTokenToMetadata = new Map<string, { symbol: string; decimals: number }>()
 
     log.info({ URL_V3, URL_V2 }, 'URLs')
