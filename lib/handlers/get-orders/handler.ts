@@ -207,10 +207,10 @@ export class GetOrdersHandler extends APIGLambdaHandler<
   }
 
   private async getTokenMetadata(tokenAddresses: string[]) {
-    if (process.env.MIMBOKU_V3_GRAPHQL_URL === undefined) {
+    if (process.env['MIMBOKU_V3_GRAPHQL_URL'] === undefined) {
       throw new Error(`Environmental variable MIMBOKU_V3_GRAPHQL_URL isn't defined!`)
     }
-    if (process.env.MIMBOKU_V2_GRAPHQL_URL === undefined) {
+    if (process.env['MIMBOKU_V2_GRAPHQL_URL'] === undefined) {
       throw new Error(`Environmental variable MIMBOKU_V2_GRAPHQL_URL isn't defined!`)
     }
     const URL_V3 = process.env.MIMBOKU_V3_GRAPHQL_URL!
