@@ -1,7 +1,7 @@
 import { Unit } from 'aws-embedded-metrics'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda'
+import { gql, GraphQLClient } from 'graphql-request'
 import Joi from 'joi'
-import fetch from 'node-fetch'
 import { UniswapXOrderEntity } from '../../entities'
 import { OrderDispatcher } from '../../services/OrderDispatcher'
 import { log } from '../../util/log'
@@ -22,6 +22,13 @@ import { GetPriorityOrderResponse } from './schema/GetPriorityOrderResponse'
 import { GetRelayOrderResponse, GetRelayOrdersResponseJoi } from './schema/GetRelayOrderResponse'
 import { GetOrdersQueryParams, GetOrdersQueryParamsJoi, RawGetOrdersQueryParams } from './schema/index'
 
+type TokenMetadataResponse = {
+  tokens: Array<{
+    id: string
+    symbol: string
+    decimals: number
+  }>
+}
 export class GetOrdersHandler extends APIGLambdaHandler<
   ContainerInjected,
   RequestInjected,
@@ -222,7 +229,7 @@ export class GetOrdersHandler extends APIGLambdaHandler<
 
     log.info({ URL_V3, URL_V2 }, 'URLs')
 
-    const query = `
+    const query = gql`
       query GetTokenMetadata($tokens: [String!]!) {
         tokens(where: { id_in: $tokens }) {
           id
@@ -234,23 +241,11 @@ export class GetOrdersHandler extends APIGLambdaHandler<
 
     try {
       // Fetch from V3 subgraph
-      const v3Response = await fetch(URL_V3, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query, variables: { tokens: tokenAddresses } }),
-      })
-
-      log.info({ v3Response }, 'V3 subgraph response')
-
-      if (!v3Response.ok) {
-        throw new Error(`V3 subgraph request failed: ${v3Response.statusText}`)
-      }
-
-      const v3Data = await v3Response.json()
+      const v3Client = new GraphQLClient(URL_V3)
+      const v3Data = await v3Client.request<TokenMetadataResponse>(query, { tokens: tokenAddresses })
       log.info({ v3Data }, 'V3 subgraph response')
-      v3Data.data.tokens.forEach((token: { id: string; symbol: string; decimals: number }) => {
+
+      v3Data.tokens.forEach((token) => {
         mapTokenToMetadata.set(token.id.toLowerCase(), {
           symbol: token.symbol,
           decimals: token.decimals,
@@ -258,24 +253,11 @@ export class GetOrdersHandler extends APIGLambdaHandler<
       })
 
       // Fetch from V2 subgraph
-      const v2Response = await fetch(URL_V2, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query, variables: { tokens: tokenAddresses } }),
-      })
-
-      log.info({ v2Response }, 'V2 subgraph response')
-
-      if (!v2Response.ok) {
-        throw new Error(`V2 subgraph request failed: ${v2Response.statusText}`)
-      }
-
-      const v2Data = await v2Response.json()
+      const v2Client = new GraphQLClient(URL_V2)
+      const v2Data = await v2Client.request<TokenMetadataResponse>(query, { tokens: tokenAddresses })
       log.info({ v2Data }, 'V2 subgraph response')
 
-      v2Data.data.tokens.forEach((token: { id: string; symbol: string; decimals: number }) => {
+      v2Data.tokens.forEach((token) => {
         const tokenId = token.id.toLowerCase()
         if (!mapTokenToMetadata.has(tokenId)) {
           mapTokenToMetadata.set(tokenId, {
