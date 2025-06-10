@@ -77,6 +77,13 @@ export class GetOrdersHandler extends APIGLambdaHandler<
 
         log.info({ getOrdersResult }, 'Get orders result before token metadata')
 
+        if (getOrdersResult.orders.length === 0) {
+          return {
+            statusCode: 200,
+            body: getOrdersResult,
+          }
+        }
+
         // mapping the token symbol and decimals to the order
         let tokenAddresses: string[] = []
         getOrdersResult.orders.map((order: any) => {
