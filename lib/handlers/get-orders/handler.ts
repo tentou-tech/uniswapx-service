@@ -95,11 +95,11 @@ export class GetOrdersHandler extends APIGLambdaHandler<
         let tokenAddresses: string[] = []
         getOrdersResult.orders.map((order: any) => {
           if (order.input.token) {
-            tokenAddresses.push(order.input.token)
+            tokenAddresses.push(order.input.token.toLowerCase())
           }
           if (order.outputs.length > 0) {
             order.outputs.forEach((output: any) => {
-              tokenAddresses.push(output.token)
+              tokenAddresses.push(output.token.toLowerCase())
             })
           }
         })
@@ -119,13 +119,13 @@ export class GetOrdersHandler extends APIGLambdaHandler<
         // add the token metadata to the order
         const orders = getOrdersResult.orders.map((order: any) => {
           if (order.input.token) {
-            order.input.symbol = tokenMetadata.get(order.input.token)?.symbol
-            order.input.decimals = tokenMetadata.get(order.input.token)?.decimals
+            order.input.symbol = tokenMetadata.get(order.input.token.toLowerCase())?.symbol
+            order.input.decimals = tokenMetadata.get(order.input.token.toLowerCase())?.decimals
           }
           if (order.outputs.length > 0) {
             order.outputs.forEach((output: any) => {
-              output.symbol = tokenMetadata.get(output.token)?.symbol
-              output.decimals = tokenMetadata.get(output.token)?.decimals
+              output.symbol = tokenMetadata.get(output.token.toLowerCase())?.symbol
+              output.decimals = tokenMetadata.get(output.token.toLowerCase())?.decimals
             })
           }
           return order
