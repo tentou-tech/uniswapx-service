@@ -25,6 +25,8 @@ export const OrderInputJoi = Joi.object({
   token: FieldValidator.isValidEthAddress().required(),
   startAmount: FieldValidator.isValidAmount(),
   endAmount: FieldValidator.isValidAmount(),
+  symbol: Joi.string().optional(),
+  decimals: Joi.number().optional(),
 })
 
 export const OrderOutputJoi = Joi.object({
@@ -32,6 +34,8 @@ export const OrderOutputJoi = Joi.object({
   startAmount: FieldValidator.isValidAmount().required(),
   endAmount: FieldValidator.isValidAmount().required(),
   recipient: FieldValidator.isValidEthAddress().required(),
+  symbol: Joi.string().optional(),
+  decimals: Joi.number().optional(),
 })
 
 export const SettledAmount = Joi.object({
