@@ -248,7 +248,7 @@ export class LambdaStack extends cdk.NestedStack {
       runtime: aws_lambda.Runtime.NODEJS_18_X,
       entry: path.join(__dirname, '../../lib/handlers/get-limit-orders/index.ts'),
       handler: 'getLimitOrdersHandler',
-      timeout: Duration.seconds(5),
+      timeout: Duration.seconds(29),
       memorySize: 512,
       bundling: {
         minify: true,
