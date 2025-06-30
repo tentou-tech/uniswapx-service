@@ -3,7 +3,7 @@ import { UnimindParameters } from "../repositories/unimind-parameters-repository
 import { UnimindStatistics } from "../crons/unimind-algorithm";
 import { default as Logger } from 'bunyan'
 import { QuoteMetadata } from "../repositories/quote-metadata-repository";
-import { UNIMIND_LIST } from "../config/unimind-list";
+// import { UNIMIND_LIST } from "../config/unimind-list";
 import { keccak256 } from "ethers/lib/utils";
 
 export const UNIMIND_SAMPLE_PERCENT = 100;
@@ -25,14 +25,14 @@ export function unimindAddressFilter(address: string) {
   return (value % 100) + 1 <= UNIMIND_SAMPLE_PERCENT;
 }
 
-export function supportedUnimindTokens(pair: string) {
-  // Extract addresses from pair (address1-address2-chainId)
-  const [address1, address2, chainId] = pair.split('-')
-  const chainIdInt = parseInt(chainId)
-  // Check if both addresses are in the UNIMIND_LIST
-  const token1 = UNIMIND_LIST.find(token => token.address.toLowerCase() === address1.toLowerCase() && token.chainId === chainIdInt)
-  const token2 = UNIMIND_LIST.find(token => token.address.toLowerCase() === address2.toLowerCase() && token.chainId === chainIdInt)
-  return token1 !== undefined && token2 !== undefined
+export function supportedUnimindTokens(_pair: string) {
+  // // Extract addresses from pair (address1-address2-chainId)
+  // const [address1, address2, chainId] = pair.split('-')
+  // const chainIdInt = parseInt(chainId)
+  // // Check if both addresses are in the UNIMIND_LIST
+  // const token1 = UNIMIND_LIST.find(token => token.address.toLowerCase() === address1.toLowerCase() && token.chainId === chainIdInt)
+  // const token2 = UNIMIND_LIST.find(token => token.address.toLowerCase() === address2.toLowerCase() && token.chainId === chainIdInt)
+  return false
 }
 
 export interface IUnimindAlgorithm<T> {
