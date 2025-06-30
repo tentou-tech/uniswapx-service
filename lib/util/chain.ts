@@ -1,4 +1,12 @@
 export enum ChainId {
+  MAINNET = 1,
+  UNICHAIN = 130,
+  BASE = 8453,
+  OPTIMISM = 10,
+  ARBITRUM_ONE = 42161,
+  POLYGON = 137,
+  SEPOLIA = 11155111,
+  GÖRLI = 5,
   STORY_AENEID = 1315,
   STORY = 1514
 }
