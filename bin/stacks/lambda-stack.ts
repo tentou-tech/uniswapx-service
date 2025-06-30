@@ -380,26 +380,30 @@ export class LambdaStack extends cdk.NestedStack {
     this.getDocsLambdaAlias = new aws_lambda.Alias(this, `GetDocsLiveAlias`, {
       aliasName: 'live',
       version: this.getDocsLambda.currentVersion,
-      provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
+      // provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
+      provisionedConcurrentExecutions: undefined,
     })
 
     this.getDocsUILambdaAlias = new aws_lambda.Alias(this, `GetDocsUILiveAlias`, {
       aliasName: 'live',
       version: this.getDocsUILambda.currentVersion,
-      provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
+      // provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
+      provisionedConcurrentExecutions: undefined,
     })
 
     this.orderNotificationLambdaAlias = new aws_lambda.Alias(this, `OrderNotificationAlias`, {
       aliasName: 'live',
       version: this.orderNotificationLambda.currentVersion,
       // provisionedConcurrentExecutions: orderNotificationProvisionedConcurrency,
-      provisionedConcurrentExecutions: enableProvisionedConcurrency ? orderNotificationProvisionedConcurrency : undefined,
+      provisionedConcurrentExecutions: undefined,
     })
 
     this.getUnimindLambdaAlias = new aws_lambda.Alias(this, `GetUnimindLiveAlias`, {
       aliasName: 'live',
       version: this.getUnimindLambda.currentVersion,
-      provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
+      // provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
+      provisionedConcurrentExecutions: undefined,
+    
     })
 
     if (enableProvisionedConcurrency) {
