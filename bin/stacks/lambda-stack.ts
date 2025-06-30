@@ -57,7 +57,7 @@ export class LambdaStack extends cdk.NestedStack {
     const { provisionedConcurrency, kmsKey, tableCapacityConfig, indexCapacityConfig, chatbotSNSArn } = props
 
     const lambdaName = `${SERVICE_NAME}Lambda`
-    const orderNotificationProvisionedConcurrency = 50
+    // const orderNotificationProvisionedConcurrency = 50
 
     const lambdaRole = new aws_iam.Role(this, `${lambdaName}-LambdaRole`, {
       assumedBy: new aws_iam.ServicePrincipal('lambda.amazonaws.com'),
