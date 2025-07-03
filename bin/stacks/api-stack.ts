@@ -10,7 +10,7 @@ import * as aws_waf from 'aws-cdk-lib/aws-wafv2'
 import { Construct } from 'constructs'
 import { STAGE } from '../../lib/util/stage'
 import { SERVICE_NAME } from '../constants'
-import { DashboardStack } from './dashboard-stack'
+// import { DashboardStack } from './dashboard-stack'
 import { IndexCapacityConfig, TableCapacityConfig } from './dynamo-stack'
 import { KmsStack } from './kms-stack'
 import { LambdaStack } from './lambda-stack'
@@ -50,17 +50,22 @@ export class APIStack extends cdk.Stack {
 
     const {
       getOrdersLambdaAlias,
+      // @ts-ignore
       getOrdersLambda,
       getNonceLambdaAlias,
+      // @ts-ignore
       getNonceLambda,
       postOrderLambdaAlias,
+      // @ts-ignore
       postOrderLambda,
       postLimitOrderLambdaAlias,
       // postLimitOrderLambda, TODO: dashboard
       getLimitOrdersLambdaAlias,
       getDocsLambdaAlias,
       getDocsUILambdaAlias,
+      // @ts-ignore
       chainIdToStatusTrackingStateMachineArn,
+      // @ts-ignore
       checkStatusFunction,
       getUnimindLambdaAlias,
       // getUnimindLambda, TODO: dashboard
@@ -433,14 +438,14 @@ export class APIStack extends cdk.Stack {
       apiKeyRequired: false, // TODO: Set to true once URA has integrated
     })
 
-    new DashboardStack(this, `${SERVICE_NAME}-Dashboard`, {
-      apiName: api.restApiName,
-      postOrderLambdaName: postOrderLambda.functionName,
-      getNonceLambdaName: getNonceLambda.functionName,
-      getOrdersLambdaName: getOrdersLambda.functionName,
-      chainIdToStatusTrackingStateMachineArn,
-      orderStatusLambdaName: checkStatusFunction.functionName,
-    })
+    // new DashboardStack(this, `${SERVICE_NAME}-Dashboard`, {
+    //   apiName: api.restApiName,
+    //   postOrderLambdaName: postOrderLambda.functionName,
+    //   getNonceLambdaName: getNonceLambda.functionName,
+    //   getOrdersLambdaName: getOrdersLambda.functionName,
+    //   chainIdToStatusTrackingStateMachineArn,
+    //   orderStatusLambdaName: checkStatusFunction.functionName,
+    // })
 
     const apiAlarm5xxSev2 = new aws_cloudwatch.Alarm(this, `${SERVICE_NAME}-SEV2-5XXAlarm`, {
       alarmName: `${SERVICE_NAME}-SEV2-5XXAlarm`,
