@@ -54,16 +54,16 @@ export class GetNonceHandler extends APIGLambdaHandler<
     const statusCodeMod = (Math.floor(statusCode / 100) * 100).toString().replace(/0/g, 'X')
 
     const getNonceStatusByChain = `GetNonceChainId${chainId.toString()}Status${statusCodeMod}`
-    metrics.putMetric(getNonceStatusByChain, 1, Unit.Count)
+    /*metrics.putMetric(getNonceStatusByChain, 1, Unit.Count) */
 
     const getNonceStatus = `GetNonceStatus${statusCodeMod}`
-    metrics.putMetric(getNonceStatus, 1, Unit.Count)
+    /*metrics.putMetric(getNonceStatus, 1, Unit.Count) */
 
     const getNonceChainId = `GetNonceRequestChainId${chainId.toString()}`
-    metrics.putMetric(getNonceChainId, 1, Unit.Count)
+    /*metrics.putMetric(getNonceChainId, 1, Unit.Count) */
 
     const getNonce = `GetNonceRequest`
-    metrics.putMetric(getNonce, 1, Unit.Count)
+    /*metrics.putMetric(getNonce, 1, Unit.Count) */
   }
 
   protected requestBodySchema(): Joi.ObjectSchema | null {

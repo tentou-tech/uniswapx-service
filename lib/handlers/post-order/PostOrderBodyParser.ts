@@ -112,10 +112,10 @@ export class PostOrderBodyParser {
       // GPA currentlys sets mainnet decay start to 24 secs into the future
       if (chainId == ChainId.MAINNET && timeDifference > DUTCHV2_ORDER_LATENCY_THRESHOLD_SEC) {
         const staleOrderMetricName = `StaleOrder-chain-${chainId.toString()}`
-        metrics.putMetric(staleOrderMetricName, 1, Unit.Count)
+        /*metrics.putMetric(staleOrderMetricName, 1, Unit.Count) */
       }
       const staleOrderMetricName = `OrderStaleness-chain-${chainId.toString()}`
-      metrics.putMetric(staleOrderMetricName, timeDifference)
+      /*metrics.putMetric(staleOrderMetricName, timeDifference) */
 
       return new DutchV2Order(order as SDKV2DutchOrder, signature, chainId, undefined, undefined, quoteId, requestId)
     } catch (err) {

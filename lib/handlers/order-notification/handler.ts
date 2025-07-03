@@ -36,16 +36,16 @@ export class OrderNotificationHandler extends DynamoStreamLambdaHandler<Containe
           if (record.dynamodb && record.dynamodb.ApproximateCreationDateTime) {
             const recordTimeDifference = record.dynamodb.ApproximateCreationDateTime - currentTime
             const staleRecordMetricName = `NotificationRecordStaleness-chain-${newOrder.chainId.toString()}`
-            metrics.putMetric(staleRecordMetricName, recordTimeDifference)
+            /*metrics.putMetric(staleRecordMetricName, recordTimeDifference) */
           }
 
           // GPA currently sets mainnet decay start to 24 secs into the future
           if (newOrder.chainId == ChainId.MAINNET && decayTimeDifference > DUTCHV2_ORDER_LATENCY_THRESHOLD_SEC) {
             const staleOrderMetricName = `NotificationStaleOrder-chain-${newOrder.chainId.toString()}`
-            metrics.putMetric(staleOrderMetricName, 1, Unit.Count)
+            /*metrics.putMetric(staleOrderMetricName, 1, Unit.Count) */
           }
           const orderStalenessMetricName = `NotificationOrderStaleness-chain-${newOrder.chainId.toString()}`
-          metrics.putMetric(orderStalenessMetricName, decayTimeDifference)
+          /*metrics.putMetric(orderStalenessMetricName, decayTimeDifference) */
         }
 
         const registeredEndpoints = await webhookProvider.getEndpoints({
@@ -87,17 +87,17 @@ export class OrderNotificationHandler extends DynamoStreamLambdaHandler<Containe
         const results = await Promise.allSettled(requests)
 
         results.forEach((result, index) => {
-          metrics.putMetric(`OrderNotificationAttempt-chain-${newOrder.chainId}`, 1)
+          /*metrics.putMetric(`OrderNotificationAttempt-chain-${newOrder.chainId}`, 1) */
           if (result.status == 'fulfilled' && result?.value?.status >= 200 && result?.value?.status <= 202) {
             delete result.value.request
             log.info(
               { result: result.value },
               `Success: New order record sent to registered webhook ${registeredEndpoints[index].url}.`
             )
-            metrics.putMetric(`OrderNotificationSendSuccess-chain-${newOrder.chainId}`, 1)
+            /*metrics.putMetric(`OrderNotificationSendSuccess-chain-${newOrder.chainId}`, 1) */
           } else {
             failedRequests.push(result)
-            metrics.putMetric(`OrderNotificationSendFailure-chain-${newOrder.chainId}`, 1)
+            /*metrics.putMetric(`OrderNotificationSendFailure-chain-${newOrder.chainId}`, 1) */
           }
         })
 
@@ -108,7 +108,7 @@ export class OrderNotificationHandler extends DynamoStreamLambdaHandler<Containe
       } catch (e: unknown) {
         log.error(e instanceof Error ? e.message : e, 'Unexpected failure in handler.')
         failedRecords.push({ itemIdentifier: record.dynamodb?.SequenceNumber })
-        metrics.putMetric('OrderNotificationHandlerFailure', 1)
+        /*metrics.putMetric('OrderNotificationHandlerFailure', 1) */
       }
     }
 
