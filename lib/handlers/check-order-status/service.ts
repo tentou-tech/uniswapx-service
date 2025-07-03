@@ -265,8 +265,8 @@ export class CheckOrderStatusUtils {
       log.info('calling updateOrderStatus', { orderHash, orderStatus, lastStatus })
       await this.repository.updateOrderStatus(orderHash, orderStatus, txHash, fillBlock, settledAmounts)
       if (IS_TERMINAL_STATE(orderStatus)) {
-        metrics.putMetric(`OrderSfn-${orderStatus}`, 1)
-        metrics.putMetric(`OrderSfn-${orderStatus}-chain-${chainId}`, 1)
+        /*metrics.putMetric(`OrderSfn-${orderStatus}`, 1) */
+        /*metrics.putMetric(`OrderSfn-${orderStatus}-chain-${chainId}`, 1) */
         log.info('order in terminal state', {
           terminalOrderInfo: {
             orderStatus,

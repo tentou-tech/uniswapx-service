@@ -205,16 +205,16 @@ export class GetOrdersHandler extends APIGLambdaHandler<
     const statusCodeMod = (Math.floor(statusCode / 100) * 100).toString().replace(/0/g, 'X')
 
     const getOrdersByChainMetricName = `GetOrdersChainId${chainId.toString()}Status${statusCodeMod}`
-    metrics.putMetric(getOrdersByChainMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getOrdersByChainMetricName, 1, Unit.Count) */
 
     const getOrdersMetricName = `GetOrdersStatus${statusCodeMod}`
-    metrics.putMetric(getOrdersMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getOrdersMetricName, 1, Unit.Count) */
 
     const getOrdersRequestMetricName = `GetOrdersRequest`
-    metrics.putMetric(getOrdersRequestMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getOrdersRequestMetricName, 1, Unit.Count) */
 
     const getOrdersRequestByChainIdMetricName = `GetOrdersRequestChainId${chainId.toString()}`
-    metrics.putMetric(getOrdersRequestByChainIdMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getOrdersRequestByChainIdMetricName, 1, Unit.Count) */
   }
 
   private async getTokenMetadata(tokenAddresses: string[]) {

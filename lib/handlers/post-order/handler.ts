@@ -131,15 +131,15 @@ export class PostOrderHandler extends APIGLambdaHandler<
     const statusCodeMod = (Math.floor(statusCode / 100) * 100).toString().replace(/0/g, 'X')
 
     const postOrderByChainMetricName = `PostOrderChainId${chainId.toString()}Status${statusCodeMod}`
-    metrics.putMetric(postOrderByChainMetricName, 1, Unit.Count)
+    /*metrics.putMetric(postOrderByChainMetricName, 1, Unit.Count) */
 
     const postOrderMetricName = `PostOrderStatus${statusCodeMod}`
-    metrics.putMetric(postOrderMetricName, 1, Unit.Count)
+    /*metrics.putMetric(postOrderMetricName, 1, Unit.Count) */
 
     const postOrderRequestMetricName = `PostOrderRequest`
-    metrics.putMetric(postOrderRequestMetricName, 1, Unit.Count)
+    /*metrics.putMetric(postOrderRequestMetricName, 1, Unit.Count) */
 
     const postOrderRequestByChainIdMetricName = `PostOrderRequestChainId${chainId.toString()}`
-    metrics.putMetric(postOrderRequestByChainIdMetricName, 1, Unit.Count)
+    /*metrics.putMetric(postOrderRequestByChainIdMetricName, 1, Unit.Count) */
   }
 }

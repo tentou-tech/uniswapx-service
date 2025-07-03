@@ -59,7 +59,7 @@ export class GetUnimindHandler extends APIGLambdaHandler<ContainerInjected, Requ
       quoteMetadata.usedUnimind = true
 
       if (swapper !== UNIMIND_DEV_SWAPPER_ADDRESS) {
-        metrics.putMetric(`public-address-used-unimind`, 1)
+        /*metrics.putMetric(`public-address-used-unimind`, 1) */
         log.info(`Public address ${swapper} received Unimind parameters for pair: ${requestQueryParams.pair} on quoteId: ${quoteMetadata.quoteId}`)
       }
 
@@ -86,7 +86,7 @@ export class GetUnimindHandler extends APIGLambdaHandler<ContainerInjected, Requ
       // TODO: Add condition for not using Unimind with bad parameters
       const afterCalculateTime = Date.now()
       const calculateTime = afterCalculateTime - beforeCalculateTime
-      metrics.putMetric(`final-parameters-calculation-time`, calculateTime)
+      /*metrics.putMetric(`final-parameters-calculation-time`, calculateTime) */
 
       // Track pi values for distribution analysis
       metrics.putMetric(`UnimindPiValue`, parameters.pi, Unit.None)
@@ -147,16 +147,16 @@ export class GetUnimindHandler extends APIGLambdaHandler<ContainerInjected, Requ
     const statusCodeMod = (Math.floor(statusCode / 100) * 100).toString().replace(/0/g, 'X')
 
     const getUnimindByPairMetricName = `GetUnimindPair${pair}Status${statusCodeMod}`
-    metrics.putMetric(getUnimindByPairMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getUnimindByPairMetricName, 1, Unit.Count) */
 
     const getUnimindMetricName = `GetUnimindStatus${statusCodeMod}`
-    metrics.putMetric(getUnimindMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getUnimindMetricName, 1, Unit.Count) */
 
     const getUnimindRequestMetricName = `GetUnimindRequest`
-    metrics.putMetric(getUnimindRequestMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getUnimindRequestMetricName, 1, Unit.Count) */
 
     const getUnimindRequestByPairMetricName = `GetUnimindRequestPair${pair}`
-    metrics.putMetric(getUnimindRequestByPairMetricName, 1, Unit.Count)
+    /*metrics.putMetric(getUnimindRequestByPairMetricName, 1, Unit.Count) */
   }
 }
 
