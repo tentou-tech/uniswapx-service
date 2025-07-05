@@ -12,6 +12,9 @@ export const OLDEST_BLOCK_BY_CHAIN = {
   // [ChainId.ARBITRUM_ONE]: 253597707,
   // [ChainId.BASE]: 22335646,
   // [ChainId.UNICHAIN]: 6747397,
+  STORY_AENEID
+  [ChainId.STORY_AENEID]: 1,
+  [ChainId.STORY]: 1,
 }
 export const BLOCK_TIME_MS_BY_CHAIN = {
   // [ChainId.MAINNET]: 12000,
