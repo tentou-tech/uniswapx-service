@@ -341,6 +341,7 @@ envVars['LABS_COSIGNER'] = process.env['LABS_COSIGNER'] || ''
 envVars['LABS_PRIORITY_COSIGNER'] = process.env['LABS_PRIORITY_COSIGNER'] || ''
 envVars['MIMBOKU_V3_GRAPHQL_URL'] = process.env['MIMBOKU_V3_GRAPHQL_URL'] || ''
 envVars['MIMBOKU_V2_GRAPHQL_URL'] = process.env['MIMBOKU_V2_GRAPHQL_URL'] || ''
+envVars['REGION'] = process.env['REGION'] || ''
 
 new APIStack(app, `${SERVICE_NAME}Stack`, {
   provisionedConcurrency: process.env.PROVISION_CONCURRENCY ? parseInt(process.env.PROVISION_CONCURRENCY) : 0,
@@ -360,5 +361,5 @@ new APIStack(app, `${SERVICE_NAME}Stack`, {
 })
 
 new APIPipeline(app, `${SERVICE_NAME}PipelineStack`, {
-  env: { account: '644039819003', region: 'us-east-2' },
+  env: { account: '748752133799', region: 'us-east-1' },
 })
