@@ -182,10 +182,11 @@ export default class FieldValidator {
   }
 
   public static isValidCosigner(): StringSchema {
-    const cosigner = getEnvVar('LABS_COSIGNER')
+    let cosigner = getEnvVar('LABS_COSIGNER')
+    cosigner = cosigner.toLowerCase()
     console.log("isValidCosigner")
     console.log(cosigner)
-    return Joi.string().valid(cosigner.toLowerCase())
+    return Joi.string().valid(cosigner)
   }
 
   public static isValidPriorityCosigner(): StringSchema {
