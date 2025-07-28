@@ -277,7 +277,7 @@ export class OffChainUniswapXOrderValidator {
   }
 
   private validateCosigner(cosigner: string): OrderValidationResponse {
-    const error = FieldValidator.isValidCosigner().validate(cosigner).error
+    const error = FieldValidator.isValidCosigner().validate(cosigner.toLowerCase()).error
     if (error) {
       return {
         valid: false,
