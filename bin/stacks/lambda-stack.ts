@@ -526,59 +526,59 @@ export class LambdaStack extends cdk.NestedStack {
       chatBotTopic = cdk.aws_sns.Topic.fromTopicArn(this, `${SERVICE_NAME}ChatbotTopic`, chatbotSNSArn)
     }
 
-    for (const chainId of SUPPORTED_CHAINS) {
-      const orderNotificationErrorRateMetric = new MathExpression({
-        expression: '100*(errors/attempts)',
-        period: Duration.minutes(5),
-        usingMetrics: {
-          errors: new Metric({
-            namespace: 'Uniswap',
-            metricName: `OrderNotificationSendFailure-chain-${chainId}`,
-            dimensionsMap: { Service: 'UniswapXService' },
-            unit: cdk.aws_cloudwatch.Unit.COUNT,
-            statistic: 'sum',
-          }),
-          attempts: new Metric({
-            namespace: 'Uniswap',
-            metricName: `OrderNotificationAttempt-chain-${chainId}`,
-            dimensionsMap: { Service: 'UniswapXService' },
-            unit: cdk.aws_cloudwatch.Unit.COUNT,
-            statistic: 'sum',
-          }),
-        },
-      })
+    // for (const chainId of SUPPORTED_CHAINS) {
+    //   const orderNotificationErrorRateMetric = new MathExpression({
+    //     expression: '100*(errors/attempts)',
+    //     period: Duration.minutes(5),
+    //     usingMetrics: {
+    //       errors: new Metric({
+    //         namespace: 'Uniswap',
+    //         metricName: `OrderNotificationSendFailure-chain-${chainId}`,
+    //         dimensionsMap: { Service: 'UniswapXService' },
+    //         unit: cdk.aws_cloudwatch.Unit.COUNT,
+    //         statistic: 'sum',
+    //       }),
+    //       attempts: new Metric({
+    //         namespace: 'Uniswap',
+    //         metricName: `OrderNotificationAttempt-chain-${chainId}`,
+    //         dimensionsMap: { Service: 'UniswapXService' },
+    //         unit: cdk.aws_cloudwatch.Unit.COUNT,
+    //         statistic: 'sum',
+    //       }),
+    //     },
+    //   })
 
-      const sev2OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev2ErrorRate-chain-${chainId}`, {
-        alarmName: `${SERVICE_NAME}-SEV2-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
-        metric: orderNotificationErrorRateMetric,
-        threshold: 30,
-        evaluationPeriods: 1,
-        datapointsToAlarm: 1,
-        treatMissingData: TreatMissingData.IGNORE,
-        comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      })
+    //   const sev2OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev2ErrorRate-chain-${chainId}`, {
+    //     alarmName: `${SERVICE_NAME}-SEV2-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
+    //     metric: orderNotificationErrorRateMetric,
+    //     threshold: 30,
+    //     evaluationPeriods: 1,
+    //     datapointsToAlarm: 1,
+    //     treatMissingData: TreatMissingData.IGNORE,
+    //     comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+    //   })
 
-      const sev3OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev3ErrorRate-chain-${chainId}`, {
-        alarmName: `${SERVICE_NAME}-SEV3-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
-        metric: orderNotificationErrorRateMetric,
-        threshold: 10,
-        evaluationPeriods: 1,
-        datapointsToAlarm: 1,
-        treatMissingData: TreatMissingData.IGNORE,
-        comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      })
+    //   const sev3OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev3ErrorRate-chain-${chainId}`, {
+    //     alarmName: `${SERVICE_NAME}-SEV3-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
+    //     metric: orderNotificationErrorRateMetric,
+    //     threshold: 10,
+    //     evaluationPeriods: 1,
+    //     datapointsToAlarm: 1,
+    //     treatMissingData: TreatMissingData.IGNORE,
+    //     comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+    //   })
 
-      if (chatBotTopic) {
-        sev2OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
-        sev3OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
-      }
-    }
+    //   if (chatBotTopic) {
+    //     sev2OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
+    //     sev3OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
+    //   }
+    // }
 
     /* cron stack */
-    new CronStack(this, `${SERVICE_NAME}CronStack`, { 
-      lambdaRole,
-      envVars: props.envVars,
-      chatbotSNSArn: props.chatbotSNSArn,
-    })
+    // new CronStack(this, `${SERVICE_NAME}CronStack`, { 
+    //   lambdaRole,
+    //   envVars: props.envVars,
+    //   chatbotSNSArn: props.chatbotSNSArn,
+    // })
   }
 }
