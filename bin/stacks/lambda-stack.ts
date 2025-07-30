@@ -33,7 +33,7 @@ export class LambdaStack extends cdk.NestedStack {
   public readonly getOrdersLambda: aws_lambda_nodejs.NodejsFunction
   public readonly getLimitOrdersLambda: aws_lambda_nodejs.NodejsFunction
   public readonly getNonceLambda: aws_lambda_nodejs.NodejsFunction
-  private readonly orderNotificationLambda: aws_lambda_nodejs.NodejsFunction
+  // private readonly orderNotificationLambda: aws_lambda_nodejs.NodejsFunction
   private readonly getDocsLambda: aws_lambda_nodejs.NodejsFunction
   private readonly getDocsUILambda: aws_lambda_nodejs.NodejsFunction
   public readonly postOrderLambdaAlias: aws_lambda.Alias
@@ -43,7 +43,7 @@ export class LambdaStack extends cdk.NestedStack {
   public readonly getNonceLambdaAlias: aws_lambda.Alias
   public readonly getDocsLambdaAlias: aws_lambda.Alias
   public readonly getDocsUILambdaAlias: aws_lambda.Alias
-  private readonly orderNotificationLambdaAlias: aws_lambda.Alias
+  // private readonly orderNotificationLambdaAlias: aws_lambda.Alias
 
   public readonly chainIdToStatusTrackingStateMachineArn: { [key: string]: string }
   public readonly checkStatusFunction: aws_lambda_nodejs.NodejsFunction
@@ -141,57 +141,57 @@ export class LambdaStack extends cdk.NestedStack {
       tracing: aws_lambda.Tracing.ACTIVE,
     })
 
-    this.orderNotificationLambda = new aws_lambda_nodejs.NodejsFunction(this, `OrderNotification${lambdaName}`, {
-      role: lambdaRole,
-      runtime: aws_lambda.Runtime.NODEJS_18_X,
-      entry: path.join(__dirname, '../../lib/handlers/order-notification/index.ts'),
-      handler: 'orderNotificationHandler',
-      retryAttempts: 0,
-      memorySize: 1024,
-      timeout: Duration.seconds(29),
-      bundling: {
-        minify: true,
-        sourceMap: true,
-      },
-      environment: {
-        ...props.envVars,
-        stage: props.stage as STAGE,
-        KMS_KEY_ID: kmsKey.keyId,
-        VERSION: '5',
-        NODE_OPTIONS: '--enable-source-maps',
-      },
-      vpc,
-      vpcSubnets: {
-        subnets: [...vpc.privateSubnets],
-      },
-    })
+    // this.orderNotificationLambda = new aws_lambda_nodejs.NodejsFunction(this, `OrderNotification${lambdaName}`, {
+    //   role: lambdaRole,
+    //   runtime: aws_lambda.Runtime.NODEJS_18_X,
+    //   entry: path.join(__dirname, '../../lib/handlers/order-notification/index.ts'),
+    //   handler: 'orderNotificationHandler',
+    //   retryAttempts: 0,
+    //   memorySize: 1024,
+    //   timeout: Duration.seconds(29),
+    //   bundling: {
+    //     minify: true,
+    //     sourceMap: true,
+    //   },
+    //   environment: {
+    //     ...props.envVars,
+    //     stage: props.stage as STAGE,
+    //     KMS_KEY_ID: kmsKey.keyId,
+    //     VERSION: '5',
+    //     NODE_OPTIONS: '--enable-source-maps',
+    //   },
+    //   vpc,
+    //   vpcSubnets: {
+    //     subnets: [...vpc.privateSubnets],
+    //   },
+    // })
 
-    const notificationConfig = {
-      startingPosition: aws_lambda.StartingPosition.TRIM_HORIZON,
-      batchSize: 1,
-      retryAttempts: 0,
-      bisectBatchOnError: true,
-      reportBatchItemFailures: true,
-      parallelizationFactor: 10,
-    }
+    // const notificationConfig = {
+    //   startingPosition: aws_lambda.StartingPosition.TRIM_HORIZON,
+    //   batchSize: 1,
+    //   retryAttempts: 0,
+    //   bisectBatchOnError: true,
+    //   reportBatchItemFailures: true,
+    //   parallelizationFactor: 10,
+    // }
 
     // TODO: add alarms on the size of this dead letter queue
-    const orderNotificationDlq = new Queue(this, 'orderNotificationDlq')
-    const limitOrderNotificationDlq = new Queue(this, 'limitOrderNotificationDlq')
+    // const orderNotificationDlq = new Queue(this, 'orderNotificationDlq')
+    // const limitOrderNotificationDlq = new Queue(this, 'limitOrderNotificationDlq')
 
-    this.orderNotificationLambda.addEventSource(
-      new DynamoEventSource(databaseStack.ordersTable, {
-        ...notificationConfig,
-        onFailure: new SqsDlq(orderNotificationDlq),
-      })
-    )
+    // this.orderNotificationLambda.addEventSource(
+    //   new DynamoEventSource(databaseStack.ordersTable, {
+    //     ...notificationConfig,
+    //     onFailure: new SqsDlq(orderNotificationDlq),
+    //   })
+    // )
 
-    this.orderNotificationLambda.addEventSource(
-      new DynamoEventSource(databaseStack.limitOrdersTable, {
-        ...notificationConfig,
-        onFailure: new SqsDlq(limitOrderNotificationDlq),
-      })
-    )
+    // this.orderNotificationLambda.addEventSource(
+    //   new DynamoEventSource(databaseStack.limitOrdersTable, {
+    //     ...notificationConfig,
+    //     onFailure: new SqsDlq(limitOrderNotificationDlq),
+    //   })
+    // )
 
     const postOrderEnv: any = {
       ...props.envVars,
@@ -384,12 +384,12 @@ export class LambdaStack extends cdk.NestedStack {
       provisionedConcurrentExecutions: undefined,
     })
 
-    this.orderNotificationLambdaAlias = new aws_lambda.Alias(this, `OrderNotificationAlias`, {
-      aliasName: 'live',
-      version: this.orderNotificationLambda.currentVersion,
-      // provisionedConcurrentExecutions: orderNotificationProvisionedConcurrency,
-      provisionedConcurrentExecutions: undefined,
-    })
+    // this.orderNotificationLambdaAlias = new aws_lambda.Alias(this, `OrderNotificationAlias`, {
+    //   aliasName: 'live',
+    //   version: this.orderNotificationLambda.currentVersion,
+    //   // provisionedConcurrentExecutions: orderNotificationProvisionedConcurrency,
+    //   provisionedConcurrentExecutions: undefined,
+    // })
 
     this.getUnimindLambdaAlias = new aws_lambda.Alias(this, `GetUnimindLiveAlias`, {
       aliasName: 'live',
@@ -503,20 +503,20 @@ export class LambdaStack extends cdk.NestedStack {
         predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
       })
 
-      const orderNotificationLambdaTarget = new asg.ScalableTarget(this, `OrderNotificationLambda-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 4,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.orderNotificationLambdaAlias.lambda.functionName}:${this.orderNotificationLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+      // const orderNotificationLambdaTarget = new asg.ScalableTarget(this, `OrderNotificationLambda-ProvConcASG`, {
+      //   serviceNamespace: asg.ServiceNamespace.LAMBDA,
+      //   maxCapacity: provisionedConcurrency * 4,
+      //   minCapacity: provisionedConcurrency,
+      //   resourceId: `function:${this.orderNotificationLambdaAlias.lambda.functionName}:${this.orderNotificationLambdaAlias.aliasName}`,
+      //   scalableDimension: 'lambda:function:ProvisionedConcurrency',
+      // })
 
-      orderNotificationLambdaTarget.node.addDependency(this.orderNotificationLambdaAlias)
+      // orderNotificationLambdaTarget.node.addDependency(this.orderNotificationLambdaAlias)
 
-      orderNotificationLambdaTarget.scaleToTrackMetric(`OrderNotificationLambda-ProvConcTracking`, {
-        targetValue: 0.5,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+      // orderNotificationLambdaTarget.scaleToTrackMetric(`OrderNotificationLambda-ProvConcTracking`, {
+      //   targetValue: 0.5,
+      //   predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+      // })
 
       // TODO: Add unimind-related targets
     }
