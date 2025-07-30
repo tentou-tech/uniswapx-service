@@ -84,29 +84,29 @@ export class LambdaStack extends cdk.NestedStack {
       })
     )
 
-    const notificationElasticIp = new CfnEIP(this, `NotificationLambdaElasticIp`, {
-      domain: 'vpc',
-      tags: [
-        {
-          key: 'Name',
-          value: 'NotificationLambdaElasticIp',
-        },
-      ],
-    })
+    // const notificationElasticIp = new CfnEIP(this, `NotificationLambdaElasticIp`, {
+    //   domain: 'vpc',
+    //   tags: [
+    //     {
+    //       key: 'Name',
+    //       value: 'NotificationLambdaElasticIp',
+    //     },
+    //   ],
+    // })
 
-    const vpc = new Vpc(this, 'NotificationLambdaVpc', {
-      vpcName: 'NotificationLambdaVpc',
-      natGateways: 1,
-      natGatewayProvider: NatProvider.gateway({
-        eipAllocationIds: [notificationElasticIp.attrAllocationId],
-      }),
-      maxAzs: 3,
-    })
+    // const vpc = new Vpc(this, 'NotificationLambdaVpc', {
+    //   vpcName: 'NotificationLambdaVpc',
+    //   natGateways: 1,
+    //   natGatewayProvider: NatProvider.gateway({
+    //     eipAllocationIds: [notificationElasticIp.attrAllocationId],
+    //   }),
+    //   maxAzs: 3,
+    // })
 
-    const databaseStack = new DynamoStack(this, `${SERVICE_NAME}DynamoStack`, {
-      tableCapacityConfig,
-      indexCapacityConfig,
-    })
+    // const databaseStack = new DynamoStack(this, `${SERVICE_NAME}DynamoStack`, {
+    //   tableCapacityConfig,
+    //   indexCapacityConfig,
+    // })
 
     const sfnStack = new StepFunctionStack(this, `${SERVICE_NAME}SfnStack`, {
       stage: props.stage as STAGE,
