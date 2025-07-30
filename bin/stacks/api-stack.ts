@@ -58,8 +58,8 @@ export class APIStack extends cdk.Stack {
       postLimitOrderLambdaAlias,
       // postLimitOrderLambda, TODO: dashboard
       getLimitOrdersLambdaAlias,
-      getDocsLambdaAlias,
-      getDocsUILambdaAlias,
+      // getDocsLambdaAlias,
+      // getDocsUILambdaAlias,
       chainIdToStatusTrackingStateMachineArn,
       checkStatusFunction,
       getUnimindLambdaAlias,
@@ -371,8 +371,8 @@ export class APIStack extends cdk.Stack {
     const postOrderLambdaIntegration = new aws_apigateway.LambdaIntegration(postOrderLambdaAlias, {})
     const postLimitOrderLambdaIntegration = new aws_apigateway.LambdaIntegration(postLimitOrderLambdaAlias, {})
     const getNonceLambdaIntegration = new aws_apigateway.LambdaIntegration(getNonceLambdaAlias, {})
-    const getDocsLambdaIntegration = new aws_apigateway.LambdaIntegration(getDocsLambdaAlias, {})
-    const getDocsUILambdaIntegration = new aws_apigateway.LambdaIntegration(getDocsUILambdaAlias, {})
+    // const getDocsLambdaIntegration = new aws_apigateway.LambdaIntegration(getDocsLambdaAlias, {})
+    // const getDocsUILambdaIntegration = new aws_apigateway.LambdaIntegration(getDocsUILambdaAlias, {})
     const getUnimindLambdaIntegration = new aws_apigateway.LambdaIntegration(getUnimindLambdaAlias, {})
 
     const dutchAuction = api.root.addResource('dutch-auction', {
@@ -389,21 +389,21 @@ export class APIStack extends cdk.Stack {
       },
     })
 
-    const apiDocs = api.root.addResource('docs.json', {
-      defaultCorsPreflightOptions: {
-        allowOrigins: aws_apigateway.Cors.ALL_ORIGINS,
-        allowMethods: aws_apigateway.Cors.ALL_METHODS,
-      },
-    })
-    apiDocs.addMethod('GET', getDocsLambdaIntegration)
+    // const apiDocs = api.root.addResource('docs.json', {
+    //   defaultCorsPreflightOptions: {
+    //     allowOrigins: aws_apigateway.Cors.ALL_ORIGINS,
+    //     allowMethods: aws_apigateway.Cors.ALL_METHODS,
+    //   },
+    // })
+    // apiDocs.addMethod('GET', getDocsLambdaIntegration)
 
-    const apiDocsUI = api.root.addResource('api-docs', {
-      defaultCorsPreflightOptions: {
-        allowOrigins: aws_apigateway.Cors.ALL_ORIGINS,
-        allowMethods: aws_apigateway.Cors.ALL_METHODS,
-      },
-    })
-    apiDocsUI.addMethod('GET', getDocsUILambdaIntegration)
+    // const apiDocsUI = api.root.addResource('api-docs', {
+    //   defaultCorsPreflightOptions: {
+    //     allowOrigins: aws_apigateway.Cors.ALL_ORIGINS,
+    //     allowMethods: aws_apigateway.Cors.ALL_METHODS,
+    //   },
+    // })
+    // apiDocsUI.addMethod('GET', getDocsUILambdaIntegration)
 
     const order = dutchAuction.addResource('order')
     order.addMethod('POST', postOrderLambdaIntegration, {
