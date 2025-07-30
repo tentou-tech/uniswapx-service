@@ -533,103 +533,59 @@ export class LambdaStack extends cdk.NestedStack {
       chatBotTopic = cdk.aws_sns.Topic.fromTopicArn(this, `${SERVICE_NAME}ChatbotTopic`, chatbotSNSArn)
     }
 
-    const postOrder4xxRateMetric = new MathExpression({
-      expression: '(por4xx/por) * 100',
-      period: Duration.minutes(5),
-      usingMetrics: {
-        por: new Metric({
-          namespace: 'Uniswap',
-          metricName: 'PostOrderRequest',
-          dimensionsMap: { Service: 'UniswapXService' },
-          unit: cdk.aws_cloudwatch.Unit.COUNT,
-          statistic: 'sum',
-        }),
-        por4xx: new Metric({
-          namespace: 'Uniswap',
-          metricName: 'PostOrderStatus4XX',
-          dimensionsMap: { Service: 'UniswapXService' },
-          unit: cdk.aws_cloudwatch.Unit.COUNT,
-          statistic: 'sum',
-        }),
-      },
-    })
+    // for (const chainId of SUPPORTED_CHAINS) {
+    //   const orderNotificationErrorRateMetric = new MathExpression({
+    //     expression: '100*(errors/attempts)',
+    //     period: Duration.minutes(5),
+    //     usingMetrics: {
+    //       errors: new Metric({
+    //         namespace: 'Uniswap',
+    //         metricName: `OrderNotificationSendFailure-chain-${chainId}`,
+    //         dimensionsMap: { Service: 'UniswapXService' },
+    //         unit: cdk.aws_cloudwatch.Unit.COUNT,
+    //         statistic: 'sum',
+    //       }),
+    //       attempts: new Metric({
+    //         namespace: 'Uniswap',
+    //         metricName: `OrderNotificationAttempt-chain-${chainId}`,
+    //         dimensionsMap: { Service: 'UniswapXService' },
+    //         unit: cdk.aws_cloudwatch.Unit.COUNT,
+    //         statistic: 'sum',
+    //       }),
+    //     },
+    //   })
 
-    const sev2PostOrder4xxRate = new Alarm(this, `${SERVICE_NAME}-SEV2-4XX-PostOrder`, {
-      alarmName: `${SERVICE_NAME}-SEV2-4XX-PostOrder`,
-      metric: postOrder4xxRateMetric,
-      threshold: 60,
-      evaluationPeriods: 2,
-      datapointsToAlarm: 2,
-      treatMissingData: TreatMissingData.IGNORE,
-      comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-    })
+    //   const sev2OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev2ErrorRate-chain-${chainId}`, {
+    //     alarmName: `${SERVICE_NAME}-SEV2-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
+    //     metric: orderNotificationErrorRateMetric,
+    //     threshold: 30,
+    //     evaluationPeriods: 1,
+    //     datapointsToAlarm: 1,
+    //     treatMissingData: TreatMissingData.IGNORE,
+    //     comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+    //   })
 
-    const sev3PostOrder4xxRate = new Alarm(this, `${SERVICE_NAME}-SEV3-4XX-PostOrder`, {
-      alarmName: `${SERVICE_NAME}-SEV3-4XX-PostOrder`,
-      metric: postOrder4xxRateMetric,
-      threshold: 30,
-      evaluationPeriods: 2,
-      datapointsToAlarm: 2,
-    })
+    //   const sev3OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev3ErrorRate-chain-${chainId}`, {
+    //     alarmName: `${SERVICE_NAME}-SEV3-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
+    //     metric: orderNotificationErrorRateMetric,
+    //     threshold: 10,
+    //     evaluationPeriods: 1,
+    //     datapointsToAlarm: 1,
+    //     treatMissingData: TreatMissingData.IGNORE,
+    //     comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+    //   })
 
-    if (chatBotTopic) {
-      sev2PostOrder4xxRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
-      sev3PostOrder4xxRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
-    }
-
-    for (const chainId of SUPPORTED_CHAINS) {
-      const orderNotificationErrorRateMetric = new MathExpression({
-        expression: '100*(errors/attempts)',
-        period: Duration.minutes(5),
-        usingMetrics: {
-          errors: new Metric({
-            namespace: 'Uniswap',
-            metricName: `OrderNotificationSendFailure-chain-${chainId}`,
-            dimensionsMap: { Service: 'UniswapXService' },
-            unit: cdk.aws_cloudwatch.Unit.COUNT,
-            statistic: 'sum',
-          }),
-          attempts: new Metric({
-            namespace: 'Uniswap',
-            metricName: `OrderNotificationAttempt-chain-${chainId}`,
-            dimensionsMap: { Service: 'UniswapXService' },
-            unit: cdk.aws_cloudwatch.Unit.COUNT,
-            statistic: 'sum',
-          }),
-        },
-      })
-
-      const sev2OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev2ErrorRate-chain-${chainId}`, {
-        alarmName: `${SERVICE_NAME}-SEV2-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
-        metric: orderNotificationErrorRateMetric,
-        threshold: 30,
-        evaluationPeriods: 1,
-        datapointsToAlarm: 1,
-        treatMissingData: TreatMissingData.IGNORE,
-        comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      })
-
-      const sev3OrderNotificationErrorRate = new Alarm(this, `OrderNotificationSev3ErrorRate-chain-${chainId}`, {
-        alarmName: `${SERVICE_NAME}-SEV3-${props.stage}-OrderNotificationErrorRate-chain-${chainId}`,
-        metric: orderNotificationErrorRateMetric,
-        threshold: 10,
-        evaluationPeriods: 1,
-        datapointsToAlarm: 1,
-        treatMissingData: TreatMissingData.IGNORE,
-        comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      })
-
-      if (chatBotTopic) {
-        sev2OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
-        sev3OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
-      }
-    }
+    //   if (chatBotTopic) {
+    //     sev2OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
+    //     sev3OrderNotificationErrorRate.addAlarmAction(new cdk.aws_cloudwatch_actions.SnsAction(chatBotTopic))
+    //   }
+    // }
 
     /* cron stack */
-    new CronStack(this, `${SERVICE_NAME}CronStack`, {
-      lambdaRole,
-      envVars: props.envVars,
-      chatbotSNSArn: props.chatbotSNSArn,
-    })
+    // new CronStack(this, `${SERVICE_NAME}CronStack`, {
+    //   lambdaRole,
+    //   envVars: props.envVars,
+    //   chatbotSNSArn: props.chatbotSNSArn,
+    // })
   }
 }
