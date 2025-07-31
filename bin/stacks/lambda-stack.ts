@@ -103,10 +103,10 @@ export class LambdaStack extends cdk.NestedStack {
     //   maxAzs: 3,
     // })
 
-    // const databaseStack = new DynamoStack(this, `${SERVICE_NAME}DynamoStack`, {
-    //   tableCapacityConfig,
-    //   indexCapacityConfig,
-    // })
+    const databaseStack = new DynamoStack(this, `${SERVICE_NAME}DynamoStack`, {
+      tableCapacityConfig,
+      indexCapacityConfig,
+    })
 
     const sfnStack = new StepFunctionStack(this, `${SERVICE_NAME}SfnStack`, {
       stage: props.stage as STAGE,
