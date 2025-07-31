@@ -104,10 +104,10 @@ export class LambdaStack extends cdk.NestedStack {
     //   maxAzs: 3,
     // })
 
-    // const databaseStack = new DynamoStack(this, `${SERVICE_NAME}DynamoStack`, {
-    //   tableCapacityConfig,
-    //   indexCapacityConfig,
-    // })
+    const databaseStack = new DynamoStack(this, `${SERVICE_NAME}DynamoStack`, {
+      tableCapacityConfig,
+      indexCapacityConfig,
+    })
 
     new ReaperStack(this, `${SERVICE_NAME}ReaperStack`, {
       environmentVariables: {
