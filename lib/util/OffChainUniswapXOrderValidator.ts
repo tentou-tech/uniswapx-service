@@ -207,6 +207,10 @@ export class OffChainUniswapXOrderValidator {
     chainId: number,
     orderType: OrderType | undefined
   ): OrderValidationResponse {
+    console.log("reactor sdk")
+    console.log(REACTOR_ADDRESS_MAPPING[chainId][orderType!])
+    console.log("reactor")
+    console.log(reactor)
     if (!orderType || reactor.toLowerCase() != REACTOR_ADDRESS_MAPPING[chainId][orderType]!.toLowerCase()) {
       return {
         valid: false,
@@ -277,10 +281,7 @@ export class OffChainUniswapXOrderValidator {
   }
 
   private validateCosigner(cosigner: string): OrderValidationResponse {
-    console.log("validateCosigner")
-    console.log(cosigner)
     const cosignerLowercase = cosigner.toLowerCase()
-    console.log(cosignerLowercase)
     const error = FieldValidator.isValidCosigner().validate(cosignerLowercase).error
     if (error) {
       return {

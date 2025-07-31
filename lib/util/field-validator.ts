@@ -184,8 +184,6 @@ export default class FieldValidator {
   public static isValidCosigner(): StringSchema {
     let cosigner = getEnvVar('LABS_COSIGNER')
     cosigner = cosigner.toLowerCase()
-    console.log("isValidCosigner")
-    console.log(cosigner)
     return Joi.string().valid(cosigner)
   }
 
