@@ -8,7 +8,8 @@ export enum ChainId {
   SEPOLIA = 11155111,
   GÖRLI = 5,
   STORY_AENEID = 1315,
-  STORY = 1514
+  STORY = 1514,
+  HYPER_EVM_TESTNET = 998,
 }
 
 // If you update SUPPORTED_CHAINS, ensure you add a corresponding RPC_${chainId} environment variable.
@@ -16,4 +17,5 @@ export enum ChainId {
 export const SUPPORTED_CHAINS = [
   ChainId.STORY_AENEID,
   ChainId.STORY,
+  ChainId.HYPER_EVM_TESTNET
 ]
