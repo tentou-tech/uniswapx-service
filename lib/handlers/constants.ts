@@ -26,6 +26,7 @@ export const PRIORITY_ORDER_TARGET_BLOCK_BUFFER: Record<ChainId, number> = {
   [ChainId.STORY_AENEID]: 3,
   [ChainId.STORY]: 3,
   [ChainId.HYPER_EVM_TESTNET]: 3,
+  [ChainId.HYPER_EVM]: 3,
 }
 
 export const DUTCHV2_ORDER_LATENCY_THRESHOLD_SEC = 20;

@@ -15,6 +15,7 @@ export const OLDEST_BLOCK_BY_CHAIN = {
   [ChainId.STORY]: 5829144,
   [ChainId.STORY_AENEID]: 6315097,
   [ChainId.HYPER_EVM_TESTNET]: 408358201,
+  [ChainId.HYPER_EVM]: 9941362,
 }
 export const BLOCK_TIME_MS_BY_CHAIN = {
   // [ChainId.MAINNET]: 12000,
