@@ -379,5 +379,5 @@ new APIStack(app, `${SERVICE_NAME}Stack`, {
 })
 
 new APIPipeline(app, `${SERVICE_NAME}PipelineStack`, {
-  env: { account: '748752133799', region: 'us-east-1' },
+  env: { account: '748752133799', region: 'eu-north-1' },
 })

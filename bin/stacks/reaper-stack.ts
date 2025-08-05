@@ -1,15 +1,16 @@
 import { aws_ecs, aws_iam, Stack, StackProps } from "aws-cdk-lib";
+import * as cdk from 'aws-cdk-lib';
 import { DockerImageAsset, Platform } from "aws-cdk-lib/aws-ecr-assets";
 import { Cluster, ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { Construct } from "constructs";
 import { SERVICE_NAME } from "../constants";
 
 // Expect RPC_[chainId] to be set in environmentVariables
-export interface ReaperStackProps extends StackProps {
+export interface ReaperStackProps extends cdk.NestedStackProps {
   environmentVariables: { [key: string]: string };
 }
 
-export class ReaperStack extends Stack {
+export class ReaperStack extends cdk.NestedStack  {
   public readonly logDriver: aws_ecs.AwsLogDriver;
 
   constructor(scope: Construct, id: string, props: ReaperStackProps) {
