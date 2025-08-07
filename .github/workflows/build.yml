@@ -24,6 +24,7 @@ jobs:
         run: |
           branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           echo "BRANCH_NAME=${branch_name^^}" >>${GITHUB_ENV}
+          echo RPC_999=${{ secrets[format('RPC_{0}_999', env.BRANCH_NAME)] }} >> .env
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
