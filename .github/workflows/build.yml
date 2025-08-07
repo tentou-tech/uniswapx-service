@@ -13,17 +13,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "22"
-      - name: Install dependencies and CDK
-        run: |
-          mv .env.${GITHUB_REF_NAME} .env
-          cat .env
-          npm install -g aws-cdk yarn
-      - name: Build
-        run: yarn && yarn build
       - name: Uppercase branch name
         run: |
           branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           echo "BRANCH_NAME=${branch_name^^}" >>${GITHUB_ENV}
+      - name: Install dependencies and CDK
+        run: |
+          mv .env.${GITHUB_REF_NAME} .env
+          echo RPC_999=${{ secrets[format('RPC_{0}_999', env.BRANCH_NAME)] }} >> .env
+          npm install -g aws-cdk yarn
+      - name: Build
+        run: yarn && yarn build
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -32,5 +32,5 @@ jobs:
           aws-region: ${{ secrets[format('AWS_{0}_REGION', env.BRANCH_NAME)] }}
       - name: Run CDK deploy
         run: |
-          echo RPC_999=${{ secrets[format('RPC_{0}_999', env.BRANCH_NAME)] }} >> .env
           cdk deploy GoudaServiceStack --require-approval=never  > /dev/null || (echo "CDK deploy failed" && exit 1)
+
