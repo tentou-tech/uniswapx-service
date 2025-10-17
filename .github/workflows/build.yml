@@ -32,5 +32,6 @@ jobs:
           aws-region: ${{ secrets[format('AWS_{0}_REGION', env.BRANCH_NAME)] }}
       - name: Run CDK deploy
         run: |
-          cdk deploy GoudaServiceStack --require-approval=never  > /dev/null || (echo "CDK deploy failed" && exit 1)
+          cdk destroy GoudaServiceStack --require-approval=never  > /dev/null || (echo "CDK deploy failed" && exit 1)
+
 
