@@ -65,7 +65,7 @@ export const handler = metricScope((metrics) => async (event: StepFunctionState 
   const log: Logger = bunyan.createLogger({
     name: 'DynamoReaperCron',
     serializers: bunyan.stdSerializers,
-    level: 'info',
+    level: 'fatal',
   })
   
   const repo = DutchOrdersRepository.create(new DynamoDB.DocumentClient())

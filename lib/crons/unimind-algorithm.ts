@@ -24,7 +24,7 @@ async function main(metrics: MetricsLogger) {
   const log: Logger = bunyan.createLogger({
     name: 'UnimindAlgorithm',
     serializers: bunyan.stdSerializers,
-    level: 'info',
+    level: 'fatal',
   })
 
 
