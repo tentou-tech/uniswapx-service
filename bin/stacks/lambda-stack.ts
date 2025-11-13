@@ -395,127 +395,127 @@ export class LambdaStack extends cdk.NestedStack {
       provisionedConcurrentExecutions: enableProvisionedConcurrency ? provisionedConcurrency : undefined,
     })
 
-    if (enableProvisionedConcurrency) {
-      const postOrderTarget = new asg.ScalableTarget(this, `${lambdaName}-PostOrder-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 2,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.postOrderLambdaAlias.lambda.functionName}:${this.postOrderLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    // if (enableProvisionedConcurrency) {
+    //   const postOrderTarget = new asg.ScalableTarget(this, `${lambdaName}-PostOrder-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 2,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.postOrderLambdaAlias.lambda.functionName}:${this.postOrderLambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      postOrderTarget.node.addDependency(this.postOrderLambdaAlias)
-      postOrderTarget.scaleToTrackMetric(`${lambdaName}-PostOrder-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   postOrderTarget.node.addDependency(this.postOrderLambdaAlias)
+    //   postOrderTarget.scaleToTrackMetric(`${lambdaName}-PostOrder-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      const PostLimitOrderTarget = new asg.ScalableTarget(this, `${lambdaName}-PostLimitOrder-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 2,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.postLimitOrderLambdaAlias.lambda.functionName}:${this.postLimitOrderLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    //   const PostLimitOrderTarget = new asg.ScalableTarget(this, `${lambdaName}-PostLimitOrder-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 2,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.postLimitOrderLambdaAlias.lambda.functionName}:${this.postLimitOrderLambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      PostLimitOrderTarget.node.addDependency(this.postLimitOrderLambdaAlias)
-      PostLimitOrderTarget.scaleToTrackMetric(`${lambdaName}-PostLimitOrder-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   PostLimitOrderTarget.node.addDependency(this.postLimitOrderLambdaAlias)
+    //   PostLimitOrderTarget.scaleToTrackMetric(`${lambdaName}-PostLimitOrder-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      const getOrdersTarget = new asg.ScalableTarget(this, `GetOrders-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 2,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.getOrdersLambdaAlias.lambda.functionName}:${this.getOrdersLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    //   const getOrdersTarget = new asg.ScalableTarget(this, `GetOrders-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 2,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.getOrdersLambdaAlias.lambda.functionName}:${this.getOrdersLambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      getOrdersTarget.node.addDependency(this.getOrdersLambdaAlias)
+    //   getOrdersTarget.node.addDependency(this.getOrdersLambdaAlias)
 
-      getOrdersTarget.scaleToTrackMetric(`GetOrders-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   getOrdersTarget.scaleToTrackMetric(`GetOrders-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      const getLimitOrdersTarget = new asg.ScalableTarget(this, `GetLimitOrders-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 100,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.getLimitOrdersLambdaAlias.lambda.functionName}:${this.getLimitOrdersLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    //   const getLimitOrdersTarget = new asg.ScalableTarget(this, `GetLimitOrders-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 100,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.getLimitOrdersLambdaAlias.lambda.functionName}:${this.getLimitOrdersLambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      getLimitOrdersTarget.node.addDependency(this.getLimitOrdersLambda)
+    //   getLimitOrdersTarget.node.addDependency(this.getLimitOrdersLambda)
 
-      getLimitOrdersTarget.scaleToTrackMetric(`GetLimitOrders-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   getLimitOrdersTarget.scaleToTrackMetric(`GetLimitOrders-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      const getNonceTarget = new asg.ScalableTarget(this, `GetNonce-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 2,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.getNonceLambdaAlias.lambda.functionName}:${this.getNonceLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    //   const getNonceTarget = new asg.ScalableTarget(this, `GetNonce-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 2,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.getNonceLambdaAlias.lambda.functionName}:${this.getNonceLambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      getNonceTarget.node.addDependency(this.getNonceLambdaAlias)
+    //   getNonceTarget.node.addDependency(this.getNonceLambdaAlias)
 
-      getNonceTarget.scaleToTrackMetric(`GetNonce-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   getNonceTarget.scaleToTrackMetric(`GetNonce-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      const getDocsTarget = new asg.ScalableTarget(this, `GetDocs-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 2,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.getDocsLambdaAlias.lambda.functionName}:${this.getDocsLambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    //   const getDocsTarget = new asg.ScalableTarget(this, `GetDocs-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 2,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.getDocsLambdaAlias.lambda.functionName}:${this.getDocsLambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      getDocsTarget.node.addDependency(this.getDocsLambdaAlias)
+    //   getDocsTarget.node.addDependency(this.getDocsLambdaAlias)
 
-      getDocsTarget.scaleToTrackMetric(`GetDocs-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   getDocsTarget.scaleToTrackMetric(`GetDocs-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      const getDocsUITarget = new asg.ScalableTarget(this, `GetDocsUI-ProvConcASG`, {
-        serviceNamespace: asg.ServiceNamespace.LAMBDA,
-        maxCapacity: provisionedConcurrency * 2,
-        minCapacity: provisionedConcurrency,
-        resourceId: `function:${this.getDocsUILambdaAlias.lambda.functionName}:${this.getDocsUILambdaAlias.aliasName}`,
-        scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      })
+    //   const getDocsUITarget = new asg.ScalableTarget(this, `GetDocsUI-ProvConcASG`, {
+    //     serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //     maxCapacity: provisionedConcurrency * 2,
+    //     minCapacity: provisionedConcurrency,
+    //     resourceId: `function:${this.getDocsUILambdaAlias.lambda.functionName}:${this.getDocsUILambdaAlias.aliasName}`,
+    //     scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   })
 
-      getDocsUITarget.node.addDependency(this.getDocsUILambdaAlias)
+    //   getDocsUITarget.node.addDependency(this.getDocsUILambdaAlias)
 
-      getDocsUITarget.scaleToTrackMetric(`GetDocsUI-ProvConcTracking`, {
-        targetValue: 0.8,
-        predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      })
+    //   getDocsUITarget.scaleToTrackMetric(`GetDocsUI-ProvConcTracking`, {
+    //     targetValue: 0.8,
+    //     predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   })
 
-      // const orderNotificationLambdaTarget = new asg.ScalableTarget(this, `OrderNotificationLambda-ProvConcASG`, {
-      //   serviceNamespace: asg.ServiceNamespace.LAMBDA,
-      //   maxCapacity: provisionedConcurrency * 4,
-      //   minCapacity: provisionedConcurrency,
-      //   resourceId: `function:${this.orderNotificationLambdaAlias.lambda.functionName}:${this.orderNotificationLambdaAlias.aliasName}`,
-      //   scalableDimension: 'lambda:function:ProvisionedConcurrency',
-      // })
+    //   // const orderNotificationLambdaTarget = new asg.ScalableTarget(this, `OrderNotificationLambda-ProvConcASG`, {
+    //   //   serviceNamespace: asg.ServiceNamespace.LAMBDA,
+    //   //   maxCapacity: provisionedConcurrency * 4,
+    //   //   minCapacity: provisionedConcurrency,
+    //   //   resourceId: `function:${this.orderNotificationLambdaAlias.lambda.functionName}:${this.orderNotificationLambdaAlias.aliasName}`,
+    //   //   scalableDimension: 'lambda:function:ProvisionedConcurrency',
+    //   // })
 
-      // orderNotificationLambdaTarget.node.addDependency(this.orderNotificationLambdaAlias)
+    //   // orderNotificationLambdaTarget.node.addDependency(this.orderNotificationLambdaAlias)
 
-      // orderNotificationLambdaTarget.scaleToTrackMetric(`OrderNotificationLambda-ProvConcTracking`, {
-      //   targetValue: 0.5,
-      //   predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
-      // })
+    //   // orderNotificationLambdaTarget.scaleToTrackMetric(`OrderNotificationLambda-ProvConcTracking`, {
+    //   //   targetValue: 0.5,
+    //   //   predefinedMetric: asg.PredefinedMetric.LAMBDA_PROVISIONED_CONCURRENCY_UTILIZATION,
+    //   // })
 
-      // TODO: Add unimind-related targets
-    }
+    //   // TODO: Add unimind-related targets
+    // }
 
     let chatBotTopic: cdk.aws_sns.ITopic | undefined
     if (chatbotSNSArn) {
